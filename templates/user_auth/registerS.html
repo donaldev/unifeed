@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %} 
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form method=POST action="{{ url_for('registerS') }}">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Student Number</label>
+                    <input type="text" class="form-control" name="username" placeholder="Student Number">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" name="pass" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}
