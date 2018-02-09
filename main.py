@@ -51,7 +51,6 @@ def login():
 def register():
     if request.method == 'POST' :
        users = mongo.db.users
-    #    user1 = mongo.db.users.name
        username_var = request.form['username'] 
        existing_user = users.find_one({'username' : username_var})
 
@@ -71,7 +70,7 @@ def register():
 @app.route('/registerS', methods=['POST','GET'])
 def registerS():
     if request.method == 'POST' :
-       users = mongo.db.users
+       users = mongo.db.users 
        username_var = request.form['username']
        existing_user = users.find_one({'name' : username_var})
 
@@ -84,19 +83,10 @@ def registerS():
        return 'That username already exists' 
        
     return render_template('user_auth/registerS.html')
-def get_modules(modules):
-    modules_true = []
-    modules_false = []
-    for module in modules :
-            current_module = modulesDB.find_one({"mod_code" : module})
-            if  current_module :
-                modules_true.append(module)
-            else:
-                if module:
-                    modules_false.append(module)
-    return modules_true,modules_false
 
-# @app.route('/registertwo', methods=['POST','GET'])
+   
+
+@app.route('/registertwo', methods=['POST','GET'])
 # def submit():
 #     if request.method == 'POST' :
 #         #add modules to student 
@@ -119,9 +109,15 @@ def registertwo():
         module_6 = request.form['module6']
 
         modules = [module_1,module_2,module_3,module_4,module_5,module_6]
-        check_modules(modules)
         modules_true = []
         modules_false = []
+        for module in modules :
+            current_module = modulesDB.find_one({"mod_code" : module})
+            if  current_module :
+                modules_true.append(module)
+            else:
+                if module:
+                    modules_false.append(module)
         
                 
         

@@ -1,51 +1,119 @@
 {% extends "layout.html" %}
 {% block body %}
+<link rel="stylesheet" href="../static/css/main.css" />
+		<!-- Header -->
+        <header id="header">
+            <div class="inner">
+                <a href="/" class="logo">unifeed.</a>
+                <nav id="nav">
+                    <a href="{{url_for('login')}}">Sign In</a>
+                </nav>
+                <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+            </div>
+        </header>
 
+    <!-- Banner -->
+        <section id="banner">
+            <h1>Welcome to unifeed!</h1>
+            <p>An application of constant communication between lecturers and students.</p>
 
-<div class="container-fluid indexMain">
-    <div class="row">
-        <div class="col-lg-4"></div>
-        <div class="col-lg-4"><h1 style="text-align:center">Welcome to Unifeed :</h1></div>
-        <div class="col-lg-4"></div>
-    </div>
-    <div class="row">
-            <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2">
-                <div id="uniChoice">
+            <div class="container-fluid">
 
-                    <!-- <form method="POST" action="{{ url_for('login') }}">
-                        <div class="form-group">
-                        <button type="submit" name="login" class="btn btn-primary ">Login</button> -->
-                     <div class="form-group">  
-                    <a href="{{ url_for('login') }}" class="btn-primary btn btn-login">Login</a>
-                    </div> 
-
-                    <br>
-                    <div class="form-group">  
-                            <div class="dropdown">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                     Register
-                                    </a>
-                                  
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                      <a class="dropdown-item" href="{{ url_for('register') }}">Teacher</a>
-                                      <a class="dropdown-item" href="{{ url_for('registerS') }}">Student</a>
+                <div class="row">
+                        <div class="col-lg-3"></div> 
+                        <div class="col-lg-6"> 
+                            <div class="row">
+                                    <div class="col-lg-3"></div> 
+                                    <div class="col-lg-6"> 
+                                       <div class="center">
+                                           <div class="login"><a class="loginButton item" href="{{ url_for('login') }}" >Login</a></div>
+                                       </div>
                                     </div>
-                            </div>    
-                    </div> 
+                            </div>
+                            <div class="row"> 
+                                    <div class="col-lg-3"></div> 
+                                    <div class="col-lg-6">            
+                                    <button id="heading" class="login1" >Register</button> 
+                                    <div id="menuitems">
+                  
+                                            <a class="item" id="item1" href="{{ url_for('register') }}">Teacher</a>
+                                            <br>
+                                            <a class="item" id="item2" href="{{ url_for('registerS') }}">Student</a>
+                                          
+                                        </div>
+                            
+                                </div>
+                            </div>
+                        </div>
+                </div>
 
-                    <!-- <form method="POST" action="{{ url_for('register') }}">
-                            <div class="form-group">
-                            <button type="submit" name="reg" class="btn btn-primary ">Register</button>
-                            </div>  
-                    </form> -->
+            </div>
 
-                    <br>
+             
+            
 
+
+            <!-- <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3"></div> <div class="col-lg-6 signIn">
+                        <h1>Welcome to unifeed!</h1>
+                        <p>An application of constant communication between lecturers and students.</p>
+                    </div>
+                </div>
+            </div> -->
+
+
+        </section>
+
+    <!-- One -->
+        <section id="one" class="wrapper">
+            <div class="inner">
+                <div class="flex flex-3">
+                    <article>
+                        <header>
+                            <h3>Improve Student-Teacher communication</h3>
+                        </header>
+                        <p>Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu.</p>
+                        <footer>
+                            <a href="#" class="button special">More</a>
+                        </footer>
+                    </article>
+                    <article>
+                        <header>
+                            <h3>Improve overall class grades</h3>
+                        </header>
+                        <p>Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu.</p>
+                        <footer>
+                            <a href="#" class="button special">More</a>
+                        </footer>
+                    </article>
+                    <article>
+                        <header>
+                            <h3>Have your say!</h3>
+                        </header>
+                        <p>Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu.</p>
+                        <footer>
+                            <a href="#" class="button special">More</a>
+                        </footer>
+                    </article>
                 </div>
             </div>
-    </div>
+        </section>
 
-            
-</div>
 
+
+        <!-- Jquery-2.2.4 JS -->
+        <!-- <script src="../static/js/whatever/jquery-2.2.4.min.js"></script> -->
+        <!-- Popper js -->
+        <!-- <script src="../static/js/whatever/popper.min.js"></script> -->
+        <!-- Bootstrap-4 Beta JS -->
+        <!-- <script src="../static/js/whatever/bootstrap.min.js"></script> -->
+        <!-- All Plugins JS -->
+        <!-- <script src="../static/js/whatever/plugins.js"></script> -->
+        <!-- Slick Slider Js-->
+        <!-- <script src="../static/js/whatever/slick.min.js"></script> -->
+        <!-- Footer Reveal JS -->
+        <!-- <script src="../static/js/whatever/footer-reveal.min.js"></script> -->
+        <!-- Active JS -->
+        <!-- <script src="../static/js/whatever/active.js"></script> -->
 {% endblock %}
