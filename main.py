@@ -65,6 +65,7 @@ def register():
            
 
     return render_template('user_auth/register.html')
+    
 
 
 @app.route('/registerS', methods=['POST','GET'])
@@ -85,6 +86,9 @@ def registerS():
     return render_template('user_auth/registerS.html')
 
    
+
+
+
 
 @app.route('/registertwo', methods=['POST','GET'])
 # def submit():

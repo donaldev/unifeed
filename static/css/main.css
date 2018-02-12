@@ -25,6 +25,7 @@
 
 	body {
 		line-height: 1;
+		height:100%;
 	}
 
 	ol, ul {
@@ -2945,10 +2946,10 @@
 		background-repeat: no-repeat;
 		text-align: center;
 	}
-
+	
 	#banner1 {
-		padding: 12em 0 10em 0;
-		min-height: 70em;
+		padding: 12em 0 15em 0;
+		height:100%;
 		background-image:url("../img/bg-img/bgBlur.jpg");
 		background-size: cover;
 		background-position: top;
@@ -2956,10 +2957,16 @@
 		background-repeat: no-repeat;
 		text-align: center;
 	}
-
+	#three{
+		background-image:url("../img/bg-img/bgBlur.jpg");
+		background-size: cover;
+		background-position: top;
+		background-attachment: fixed;
+		background-repeat: no-repeat;
+	}
 		#banner h1 {
 			font-size: 3.5em;
-			font-weight: 100;
+			font-weight: 500;
 			color: #fff;
 			line-height: 1em;
 			margin: 0 0 0.5em 0;
