@@ -2009,7 +2009,6 @@
 		border-radius: 0;
 		border: none;
 		border: solid 1px #dbdbdb;
-		color: inherit;
 		display: block;
 		outline: 0;
 		padding: 0 1em;
@@ -2555,7 +2554,7 @@
 		background-color: #5a5a5a;
 		border-radius: 0;
 		border: 0;
-		color: #ffffff !important;
+		color: #ffffff;
 		cursor: pointer;
 		display: inline-block;
 		font-weight: 600;
@@ -2625,6 +2624,19 @@
 			font-size: 1.35em;
 		}
 
+		.profile_left{
+			margin-left:5em;
+			padding:1em;
+		}
+		.profiler{
+			margin-top:1em;
+			border:1px solid black;
+			/* border-radius:50%; */
+			max-width:15em;
+			opacity:0%;
+		}
+
+			
 		input[type="submit"].alt,
 		input[type="reset"].alt,
 		input[type="button"].alt,
@@ -2756,7 +2768,7 @@
 			padding: 0;
 			position: absolute;
 			top: 0;
-			font-size: 3em;
+			font-size: 4em;
 		}
 
 		#header a {
@@ -2766,9 +2778,9 @@
 			transition: color 0.2s ease-in-out;
 			display: inline-block;
 			padding: 0 0.75em;
-			color: inherit;
+			color: white;
 			text-decoration: none;
-			font-size: .8em;
+			font-size: 1.5em;
 		}
 
 			#header a:hover {
@@ -2908,7 +2920,6 @@
 			right: 0;
 			text-align: right;
 			top: 0;
-			vertical-align: middle;
 			width: 5em;
 		}
 
@@ -2946,10 +2957,16 @@
 		background-repeat: no-repeat;
 		text-align: center;
 	}
-	
+	#error{
+		border:1px solid red;
+		border-radius: 5px;
+		color:white;
+		visibility: hidden;
+
+	}
 	#banner1 {
 		padding: 12em 0 15em 0;
-		height:100%;
+		height:auto;
 		background-image:url("../img/bg-img/bgBlur.jpg");
 		background-size: cover;
 		background-position: top;
@@ -2957,8 +2974,17 @@
 		background-repeat: no-repeat;
 		text-align: center;
 	}
+	#two{
+		height:auto;
+		padding: 12em 0 15em 0;
+		
+		background-size: cover;
+		background-position: top;
+		background-attachment: fixed;
+		background-repeat: no-repeat;
+	}
 	#three{
-		background-image:url("../img/bg-img/bgBlur.jpg");
+		background-image:url("../img/bg-img/bg1Blur.jpg");
 		background-size: cover;
 		background-position: top;
 		background-attachment: fixed;
@@ -2974,12 +3000,17 @@
 		}
 .opaque{
 	background-color:black;
-	opacity:.6;
+	opacity:.75;
+	border-radius:20px;
+}
+.opaqueStronger{
+	background-color:black;
+	opacity:.75;
 	border-radius:20px;
 }
 
 .formLabel{
-	font-weight: 200;
+	font-weight: bold;
 	color:white;
 }
 .center h1 {
@@ -2990,6 +3021,23 @@
 	margin: 0 0 0.5em 0;
 	padding: 0;
 }
+.inner_nav{
+	color:white;
+	text-decoration: none;
+	font-size:2em;
+}
+.inner_nav:hover{
+	color:white;
+	filter:blur()
+
+}
+.nav_active{
+	text-decoration: underline;
+
+}
+.form-control{
+	color:white;
+}
 		.item {
 			font-size: 20px;
 			 font-family:verdana;
@@ -2998,6 +3046,7 @@
 			padding:4px;
 		  height:30px;
 		  -webkit-transition:0.2s;
+		  transition:0.2s;
 		  text-decoration: none;
 		  
 		  color:white;
@@ -3018,6 +3067,7 @@
 	
 
 		.login{
+			
 			display:inline-block;
 			border:1px solid white;
 			min-width:200px;
@@ -3027,9 +3077,13 @@
 			border:1px solid white;
 			min-width:200px;
 		}
-		.login:hover {
-			color:black;
+		.btnAct:hover{
+			font-weight:bold;
+			color:white;
 		}
+		/* .login:hover {
+			color:black;
+		} */
 		.loginButton{
 			
 			background-color:transparent;
@@ -3042,6 +3096,73 @@
 			color: rgba(255, 255, 255, 0.55);
 			margin-bottom: 1.75em;
 		}
+
+.list-group h2 {
+	color:white;
+}
+
+		/* Today
+   -------------------------------------------------- */
+
+.today-piece {
+    border-radius: 0.25rem;
+    padding: 1.6rem;
+    font-size: 1.25em;
+    text-align: center;
+    background: white;
+}
+
+
+
+
+
+
+/* Piece positions
+   -------------------------------------------------- */
+
+.top {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.middle {
+    border-radius: 0;
+}
+.bottom {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+
+
+
+
+
+/* Piece categories
+   -------------------------------------------------- */
+
+.day,
+.year {
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: white;
+    background: rgb(49, 154, 196);
+}
+.month {
+    padding-top: 1.75rem;
+    padding-bottom: 0;
+    font-size: 1.5em;
+    font-weight: 200;
+}
+
+.date {
+	padding-top: 0;
+	font-weight: bold;
+    padding-bottom: 1.75rem;
+    font-size: 3em;
+    font-weight: 100;
+}	
 
 		@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
 

@@ -38,7 +38,7 @@
                                                 <input type="password" class="form-control" name="pass" placeholder="Password">
                                             </div>
                             
-                                            <a href="#two" class="loginButton login">Next</a>
+                                            <a href="#two" class=" loginButton login ">Next</a>
                                         </form>
                                        </div>
                                     </div>
@@ -51,7 +51,6 @@
             </div>
 
         </section>
-
         <section id="two" class="wrapper special">
 
             <div class="container-fluid">
@@ -63,41 +62,81 @@
                                     <div class="col-lg-3"></div> 
                                     <div class="col-lg-6"> 
                                        <div class="center">
+                                            <h1>Personal Details</h1>
+                                            <p>Tell us a little bit about yourself </p>
+                                        
+                                            <div class="form-group">
+                                                <label for="exampleInputModule1">Email</label>
+                                                <input type="text" class="form-control" name="email" placeholder="EG0000" required>
+                                            </div>
+                                            
+                            
+                                            <div class="form-group">
+                                                <label for="exampleInputModule3">Year</label>
+                                                <input type="text" class="form-control" name="Year" placeholder="EG0002">
+                                            </div>
+                                            <br>
+                                            <a href="#" class="loginButton login" onclick="document.getElementById('registerSForm').submit();">Submit</a>
+                                        </form>
+                                       </div>
+                                    </div>
+                            </div>
+                            
+                            <br>
+                        </div>
+                </div>
+
+            </div>
+
+        </section>
+        <form>
+        <section id="three" class="wrapper special">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                        <div class="col-lg-3"></div> 
+                        <div class="col-lg-6 opaqueStronger"> 
+                            <div class="row">
+                                    <div class="col-lg-3"></div> 
+                                    <div class="col-lg-6"> 
+                                       <div class="center">
                                             <h1>Module Registration</h1>
                                             <p>Please enter the modules you are enrolled in: </p>
                                         
                                             <div class="form-group">
                                                 <label for="exampleInputModule1">Module Code:</label>
-                                                <input type="text" class="form-control" name="module1" placeholder="EG0000" required>
+                                                <input type="text" class="form-control" id = "module1" name="module1" placeholder="EG0000" required>
                                             </div>
                                             
                                             <div class="form-group">
                                                 <label for="exampleInputModule2">Module Code:</label>
-                                                <input type="text" class="form-control" name="module2" placeholder="EG0001" required>
+                                                <input type="text" class="form-control" id = "module2" name="module2" placeholder="EG0001" required>
                                             </div>
                             
                                             <div class="form-group">
                                                 <label for="exampleInputModule3">Module Code:</label>
-                                                <input type="text" class="form-control" name="module3" placeholder="EG0002">
+                                                <input type="text" class="form-control" id = "module3" name="module3" placeholder="EG0002">
                                             </div>
                             
                                             <div class="form-group">
                                                 <label for="exampleInputModule4">Module Code:</label>
-                                                <input type="text" class="form-control" name="module4" placeholder="EG0003">
+                                                <input type="text" class="form-control" id = "module4" name="module4" placeholder="EG0003">
                                             </div>
                             
                                             <div class="form-group">
                                                 <label for="exampleInputModule5">Module Code:</label>
-                                                <input type="text" class="form-control" name="module5" placeholder="EG0004">
+                                                <input type="text" class="form-control" id = "module5" name="module5" placeholder="EG0004">
                                             </div>
                                         
                                             <div class="form-group">
                                                 <label for="exampleInputModule6">Module Code:</label>
-                                                <input type="text" class="form-control" name="module6" placeholder="EG0005">
+                                                <input type="text" class="form-control" id = "module6" name="module6" placeholder="EG0005">
                                             </div>
-                            
-                                            <a href="#three" class="loginButton login">Validate</a>
-                                        </form>
+                                            
+                                            <a href="#three" class="loginButton login checkModules">Validate</a>
+                                            
+        </form>
                                        </div>
                                     </div>
                             </div>
@@ -116,7 +155,7 @@
 
                 <div class="row">
                         <div class="col-lg-3"></div> 
-                        <div class="col-lg-6 opaque"> 
+                        <div class="col-lg-6 opaqueStronger"> 
                             <div class="row">
                                     <div class="col-lg-3"></div> 
                                     <div class="col-lg-6"> 
@@ -124,13 +163,15 @@
                                             <h1>Selected Modules</h1>
                                             <p>Please check modules and submit </p>
                                         
-                                            SHOW MODULES HERE
+                                            <ul class="validMods">
+
+                                            </ul>
 
                                             <br>
                                             <!--if incorrectModulesLength = 0 -->
                                             <a href="#" class="loginButton login" onclick="document.getElementById('registerSForm').submit();">Submit</a>
                                             <!-- Else if incorrectMoudlesLength >0 -->
-                                            <a href="#two" class="loginButton login"> Change Modules </a>
+                                            <a href="#two" class="loginButton login "> Change Modules </a>
                                         </form>
                                        </div>
                                     </div>
@@ -143,5 +184,15 @@
             </div>
 
         </section>
+    </section>
+    <footer id="footer">
+        <div class="inner">
+            <div class="flex">
+                <div class="copyright">
+                    &copy; unifeed 
+                </div>
+            </div>
+        </div>
+    </footer>
 
 {% endblock %}

@@ -6,17 +6,17 @@
             <div class="inner">
                 <a href="/" class="logo">unifeed.</a>
                 <nav id="nav">
-                    <a href="{{url_for('login')}}">Sign In</a>
-                    <a href="#one">Next</a>
+                    <a href="{{url_for('signIn')}}">Sign In</a>
+                    <a href="#one">Information</a>
                 </nav>
-                <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+                <!-- <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a> -->
             </div>
         </header>
 
     <!-- Banner -->
         <section id="banner">
             <h1 class="title">Welcome to unifeed!</h1>
-            <p style="font-weight:bold;">An application of constant communication between lecturers and students.</p>
+            <p style="font-weight:bold; font-size:1.5em;">A Feedback Platform for Third-level Lecturers and Students.</p>
 
             <div class="container-fluid">
 
@@ -27,21 +27,21 @@
                                     <div class="col-lg-3"></div> 
                                     <div class="col-lg-6"> 
                                        <div class="center">
-                                           <div class="login"><a class="loginButton item" href="{{ url_for('login') }}" >Login</a></div>
+                                           <button class="loginButton login"><a class="item" href="{{ url_for('login') }}" >Login</a></button>
                                        </div>
                                     </div>
                             </div>
                             <div class="row"> 
                                     <div class="col-lg-3"></div> 
                                     <div class="col-lg-6">            
-                                    <button id="heading" class="login1" >Register</button> 
+                                    <button id="heading" class="login loginButton" >Register</button> 
                                     <div id="menuitems">
                   
                                             <a class="item" id="item1" href="{{ url_for('register') }}">Teacher</a>
                                             <br>
                                             <a class="item" id="item2" href="{{ url_for('registerS') }}">Student</a>
                                           
-                                        </div>
+                                    </div>
                             
                                 </div>
                             </div>
@@ -101,6 +101,14 @@
             </div>
         </section>
 
-
+        <footer id="footer">
+            <div class="inner">
+                <div class="flex">
+                    <div class="copyright">
+                        &copy; unifeed 
+                    </div>
+                </div>
+            </div>
+        </footer>
 
 {% endblock %}

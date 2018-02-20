@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="../static/css/main.css" />
+		<!-- Header -->
+        <header id="header">
+            <div class="inner">
+                <a href="/" class="logo">unifeed.</a>
+                <nav id="nav"></nav>
+                    <a href="{{url_for('logout')}}">Log Out</a>
+            </nav>
+                <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+            </div>
+        </header>
+<section id="banner1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3 profile_left opaque">
+                    <div class="center">
+                        <img class="profiler" src="{{ url_for('static', filename='img/pp1.png') }}"></img>
+                        <h2 style="color:white">{{username}}</h2>
+                        <hr>
+                        <div class="list-group">
+                            
+                            <br>
+                            <h5 style="color:white"> Office Location : {{location}}</h5>
+                            <br>
+                        </div>
+                        <div class="today">
+                                <div class="today-piece  top  day"></div>
+                                <div class="today-piece  middle  month"></div>
+                                <div class="today-piece  middle  date"></div>
+                                <div class="today-piece  bottom  year"></div>
+                        </div>
+                    </div>    
+            </div> 
+            
+            <div class="col-lg-6 opaque"> 
+                <div class="row">
+                    <div class="col-lg-8"></div>
+                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('home')}}">Modules</a> </div>
+                        
+                    <div class="col-lg-2"><a class="inner_nav" href="#">Results</a> </div>
+                    <br>
+                    <br>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3"></div> 
+                    <div class="col-lg-6"> 
+                        <div class="center">
+                            <h1 center> Your Modules</h1>
+                            {% if current_teacher_modules %}
+                            <ul class="list-group">
+                                {% for module in current_teacher_modules %}
+                                <button type="button" class="list-group-item list-group-item-action title" style="text-align:center;">{{ module.mod_code }} - {{ module.mod_title }} </button> 
+                                <div class="showModinfo"> <br> </div>
+                                {% endfor %}
+                            </ul>   
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        
+</section>
+</section>
+<footer id="footer">
+    <div class="inner">
+        <div class="flex">
+            <div class="copyright">
+                &copy; unifeed 
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}

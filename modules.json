@@ -1,12 +1,13 @@
 
         {
-            "mod_code" : "CS310",
-            "mod_title" : "Programming languages and Compilers",
-            "owner" : "hao.wu@mumail.ie",
-            "enrolled" : ["14492568,14429123"],
-            "posts" : {
-                        "content": "This module teaches the ways of computer science",
+            "mod_code" : "CS615",
+            "mod_title" : "Internet Solutions Engineering",
+            "owner" : "ralf.bierig@mumail.ie",
+            "enrollment_key": "101rb",
+            "enrolled" : ["14492568"],
+            "posts" : [{
+                        "content": "A masters student's guide to success : http://www.mastersdegree.com/guide/how-to-be-successful-in-a-masters-program/",
                         "date" : "26/10/18"
-                    }
+                    }]
         }
 
