@@ -29,15 +29,15 @@
                                     <div id="error"></div>
                                     <div class="form-group">
                                         <label class="formLabel" for="exampleInputEmail1">Username</label>
-                                        <input type="text" class="form-control" name="username" placeholder="Username" required="true" >
+                                        <input type="text" class="form-control logintext" name="username" placeholder="Username" required="true" >
                                     </div>
                                     <div class="form-group">
                                         <label class="formLabel" for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="form-control" name="pass" placeholder="Password" required>
+                                        <input type="password" class="form-control logintext" name="pass" placeholder="Password" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="formLabel" for="exampleInputEmail1">Enrollment Key</label>
-                                        <input type="text" class="form-control" name="enrollment_key" placeholder="enrollment_key" required>
+                                        <input type="text" class="form-control logintext" name="enrollment_key" placeholder="enrollment_key" required>
                                     </div>
                                     <br>    
                                     <hr>
@@ -45,18 +45,14 @@
                                     <p>Tell us a bit about yourself</p>                                
                                     <div class="form-group">
                                             <label class="formLabel" for="exampleInputEmail1">Office Location</label>
-                                            <input type="text" class="form-control" name="office_loc" placeholder="e.g Room 112, Callan Building" required>
+                                            <input type="text" class="form-control logintext" name="office_loc" placeholder="e.g Room 112, Callan Building" required>
                                     </div>
                                     
                                     <div class="form-group">
                                             <label class="formLabel" for="exampleInputSites">Link to your personal researce site</label>
-                                            <input type="text" class="form-control" name="link" placeholder="e.g. https://lecturerresearch.com" required>
+                                            <input type="text" class="form-control logintext" name="link" placeholder="e.g. https://lecturerresearch.com" required>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="formLabel" for="exampleInputSites">Profile image url</label>
-                                        <input type="text" class="form-control" name="img_link" placeholder="e.g. https://www.ocf.berkeley.edu/icon-profile.png" required>
-                                    </div>
                                     <br>
                                     <!--if incorrectModulesLength = 0 -->
                                      <a href="#" class="loginButton login"><input type="submit" class="form-control" name="submit"/></a>
@@ -83,7 +79,7 @@
 </footer>
 
     {% if errormsg %}
-    x
+    
     <script type="text/javascript">
     
         var error = '{{errormsg}}';

@@ -18,7 +18,7 @@
             <h1 class="title">Welcome to unifeed!</h1>
             <p style="font-weight:bold; font-size:1.5em;">A Feedback Platform for Third-level Lecturers and Students.</p>
 
-            <div class="container-fluid">
+            <div class="container-fluid containindex">
 
                 <div class="row">
                         <div class="col-lg-3"></div> 
@@ -27,14 +27,15 @@
                                     <div class="col-lg-3"></div> 
                                     <div class="col-lg-6"> 
                                        <div class="center">
-                                           <button class="loginButton login"><a class="item" href="{{ url_for('login') }}" >Login</a></button>
+                                           <button class="loginButton loginhome"><a class="item" href="{{ url_for('login') }}" >Login</a></button>
                                        </div>
                                     </div>
+                                    <div class="col-lg-3"></div> 
                             </div>
                             <div class="row"> 
                                     <div class="col-lg-3"></div> 
                                     <div class="col-lg-6">            
-                                    <button id="heading" class="login loginButton" >Register</button> 
+                                    <button id="heading" class="loginhome loginButton" >Register</button> 
                                     <div id="menuitems">
                   
                                             <a class="item" id="item1" href="{{ url_for('register') }}">Teacher</a>
@@ -44,6 +45,7 @@
                                     </div>
                             
                                 </div>
+                                <div class="col-lg-3"></div> 
                             </div>
                         </div>
                 </div>
@@ -70,16 +72,16 @@
         <section id="one" class="wrapper">
             <div class="inner">
                 <div class="flex flex-3">
-                    <article>
+                    <article class="info">
                         <header>
-                            <h3>Improve Student-Teacher communication</h3>
+                            <h3>Student-Teacher communication</h3>
                         </header>
                         <p>Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu.</p>
                         <footer>
                             <a href="#" class="button special">More</a>
                         </footer>
                     </article>
-                    <article>
+                    <article class="info">
                         <header>
                             <h3>Improve overall class grades</h3>
                         </header>
@@ -88,14 +90,15 @@
                             <a href="#" class="button special">More</a>
                         </footer>
                     </article>
-                    <article>
+                    <article class="info">
                         <header>
                             <h3>Have your say!</h3>
                         </header>
                         <p>Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu.</p>
-                        <footer>
+                        
+                        <footer style="bottom: 0">
                             <a href="#" class="button special">More</a>
-                        </footer>
+                        </footer></div>
                     </article>
                 </div>
             </div>

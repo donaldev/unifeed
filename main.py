@@ -1,8 +1,11 @@
 from flask import Flask, render_template, url_for, request, session, redirect, jsonify
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
-import bcrypt
+from flask_restful import Resource, Api
+from flask_restful import reqparse
+import bcrypt 
 import json
+import datetime
 
 app = Flask(__name__)
 
@@ -10,6 +13,7 @@ app.config['MONGO_DBNAME'] = 'unifeed'
 app.config['MONGO_URI'] = 'mongodb://donaldev:password@ds113098.mlab.com:13098/unifeed'
 
 mongo = PyMongo(app)
+parser = reqparse.RequestParser()
 
 
 @app.route('/')
@@ -23,8 +27,6 @@ def index():
 def signIn():
     #if it's a teacher logged in
     if 'username' in session: 
-
-        # # grab modules,name etc and pass in
         return redirect(url_for('home'))
     
 
@@ -32,7 +34,7 @@ def signIn():
     #if it's a student logged in    
     elif 's_no' in session:
         # grab modules,name etc and pass in
-        return 'You are logged in as ' + session['s_no'] + '<br> You are a student!'
+        return redirect(url_for('home'))
     #if nobody logged in send them back to the login
     return render_template('user_auth/login.html')
 
@@ -52,11 +54,11 @@ def login():
         if login_teacher : #if a teacher is logged in
             if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login_teacher['password']) ==  login_teacher['password']:
                 session['username'] = username_var  #store their username in a session
-                return redirect(url_for('signIn'))
+                return redirect(url_for('home'))
         if login_student : #if a student is logged in
             if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login_student['password']) ==  login_student['password']:
                 session['s_no'] = username_var  #store their student number in a session
-                return redirect(url_for('signIn'))
+                return redirect(url_for('home'))
 
     return render_template('user_auth/login.html')
 
@@ -85,7 +87,7 @@ def register():
 
 
                 for module in modules.find({}) :
-                    print(module['owner'])
+                    # print(module['owner'])
                     if module['owner'] == username_var :
                         my_modules.append(module['mod_code'])
                 # my_modules = modules.find_one({'owner':username_var})['mod_code'] #########THIS IS TO BE CHANGED TO LOOP ALL OF THEM
@@ -107,7 +109,7 @@ def register():
                         'link' : link,
                         'img_link' : img_link})
                     session['username'] = username_var
-                    return redirect(url_for('signIn'))
+                    return redirect(url_for('home'))
                 else: #otherwise redirect them to same page plus pass in error msg
                     error_msg = 'Invalid enrollment key, please try again'
                     print(error_msg)
@@ -123,20 +125,13 @@ def register():
        
 
     return render_template('user_auth/register.html')
-    
+
+
 @app.route('/checkModules',methods=['POST'])
 def checkModules():
     modulesDB = mongo.db.modules
-
     module_1 = request.form['module1'] 
-    module_2 = request.form['module2']
-    module_3 = request.form['module3']
-    module_4 = request.form['module4']
-    module_5 = request.form['module5']
-    module_6 = request.form['module6']
-
-    selectedModules = [module_1,module_2,module_3,module_4,module_5,module_6]
-    
+ 
     correctMods = []
     incorrectMods = []
     allModules = [
@@ -144,129 +139,171 @@ def checkModules():
          "incorrect" : incorrectMods   
         }
     ]
-    for module in selectedModules :
-        if modulesDB.find_one({"mod_code" : module}) :
-           correctMods.append(module)
-        else :
-            incorrectMods.append(module)
+    # for module in selectedModules :
+    if modulesDB.find_one({"mod_code" : module_1}) :
+        correctMods.append(module_1)
+    else :
+        incorrectMods.append(module_1)
+
     return jsonify({'allModules' : allModules})
 
 
 @app.route('/registerS', methods=['POST','GET'])
 def registerS():
+    
     if request.method == 'POST' :
-       users = mongo.db.users 
-       username_var = request.form['username']
-       existing_user = users.find_one({'name' : username_var})
+        # parser.add_argument('modules', action='append') 
+        # args = parser.parse_args()
+        users = mongo.db.users
+        username_var = request.form['username']
+        existing_user = users.find_one({'s_no' : username_var})
+        modules = request.form['modules']
+        modules = modules.split(",")
+        print(modules)
 
-       if existing_user is None:
+
+
+        if existing_user is None:
            user_type = 'student'
            hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
-           users.insert({'s_no' : username_var, 'password' : hashpass, 'user_type' : user_type})
+           users.insert({'s_no' : username_var, 'password' : hashpass, 'user_type' : user_type, 'modules' : modules})
            session['s_no'] = username_var
-           return redirect(url_for('registertwo'))
-       return 'That username already exists' 
+           return redirect(url_for('home'))
+        else:
+           error_msg = 'Username already exists - please log in'
+           return render_template('user_auth/registerS.html', errormsg=error_msg)
        
     return render_template('user_auth/registerS.html')
-
-   
-
-
-
-
-@app.route('/registertwo', methods=['POST','GET'])
-# def submit():
-#     if request.method == 'POST' :
-#         #add modules to student 
-#         #add student number to each module
-
-def registertwo():
-    if request.method == 'POST' :
-        users = mongo.db.users
-        modulesDB = mongo.db.modules
-        module_1 = request.form['module1'] 
-
-        module_2 = request.form['module2']
-
-        module_3 = request.form['module3']
-
-        module_4 = request.form['module4']
-
-        module_5 = request.form['module5']
-
-        module_6 = request.form['module6']
-
-        modules = [module_1,module_2,module_3,module_4,module_5,module_6]
-        modules_true = []
-        modules_false = []
-        for module in modules :
-            current_module = modulesDB.find_one({"mod_code" : module})
-            if  current_module :
-                modules_true.append(module)
-            else:
-                if module:
-                    modules_false.append(module)
-        
-                
-        
-        print (modules_true)
-        print (modules_false)
-       
-
-        if 'username' in session : 
-
-            #set selected modules to modules field in user table in following format -> modules = [module0,module1] with module* be a module code FN356
-            #to show users modules we check module one to start with - if module[0] in db.users.modules = one instance of find_one(module[0] in modules.code is in db.modules 
-                                                                      # set variable to be that module + its information(to show on page)
-            
-
-            # current_teacher_modules = users.find_one({'username':session['username']})['modules']
-            # users.update_one({'username' : session['username']}, {'$set':{'modules': modules, 'registered' : 'true'}})
-            # modules = modulesDB
-            # for module in modules.mod_codes.find()
-            
-            #     existing_module = modulesDB.find({'') 
-            #     if existing_module is None :
-            #        module = "<h2 class='danger'> Not a correct Module Code, please try again</h2>"
-            #     module = module 
-
-
-            return render_template('user_auth/registertwo.html')
-        
-        if 's_no' in session : 
-            users.update_one({'s_no' : session['s_no']}, {'$set':{'modules': modules, 'registered' : 'true'}})
-            return render_template('user_auth/registertwo.html', modules_true=modules_true, modules_false=modules_false)
-
-        # if ''
-
-        # return render_template('user_auth/registertwo.html',name=current_student)
-    return render_template('user_auth/registertwo.html')
 
 @app.route('/home',methods=['POST','GET'])
 def home() :
 
-    if request.method == 'POST' :
-         return render_template('home/homepage.html')
+    if request.method == 'GET' :
+
+        if 'username' in session: 
+            users = mongo.db.users #initialise user DB
+
+            #### Retrieve all of the current lecturers personal details AND educational details ie modulesDB
+            
+            modules_var = []
+            user = users.find_one({"username" : session['username']})
+            
+            username = session['username']
+            location = users.find_one({"username" : session['username']})['office_loc']
+            img_loc = users.find_one({"username" : session['username']})['img_link']
+
+
+            # print(user['modules'])
+            for module in user['modules'] :
+                modules_var.append(module)
+            # print(modules_var)
+            current_teacher_modules = retrieve_user_modules(modules_var,'reg')
+            return render_template('home/homepage.html', current_teacher_modules = current_teacher_modules,username = username, location=location, img_loc=img_loc)
+
+        elif 's_no' in session :
+            users = mongo.db.users #initialise user DB
+
+            #### Retrieve all of the current lecturers personal details AND educational details ie modulesDB
+            
+            modules_var = []
+            user = users.find_one({"s_no" : session['s_no']})
+            
+            username = session['s_no']
+            # location = users.find_one({"username" : session['username']})['office_loc']
+            # img_loc = users.find_one({"username" : session['username']})['img_link']
+
+
+            # print(user['modules'])
+            for module in user['modules'] :
+                modules_var.append(module)
+            print(modules_var)
+           
+            current_student_modules = retrieve_user_modules(modules_var,'reg')
+            print(current_student_modules)
+            return render_template('home/homepage.html', current_student_modules = current_student_modules,username = username)
+        else :
+            return redirect(url_for('signIn'))    
+        
+    return redirect(url_for('signIn'))
+
+
+#write post for module
+@app.route('/mod_post',methods=['POST'])
+def mod_post():
+    modulesDB = mongo.db.modules
     
-    if 'username' in session: 
-        users = mongo.db.users #initialise user DB
+    module = request.form['mod_opt']
+    post = request.form['post']
+    date = datetime.datetime.now()
+    time = date.strftime(" %d-%m-%Y %H:%M")
 
-        #### Retrieve all of the current lecturers personal details AND educational details ie modulesDB
+    post_ready = {
+        'content' : post,
+        'date' : time,
+        'author' : session['username']
+    }
+    modulesDB.update_one({'mod_code': module}, {'$push':{'posts':post_ready}})
+    #  users.update_one({'email':session['email']}, {'$set': {'name': name, 'surname': surname}})
+    return redirect(url_for('home'))
+
+@app.route('/myfeed', methods=['GET'])
+def myfeed():
+
+    modulesDB = mongo.db.modules
+    users = mongo.db.users
+
+
+    if request.method == 'GET' :
+
+        if 'username' in session: 
+            users = mongo.db.users #initialise user DB
+
+            #### Retrieve all of the current lecturers personal details AND educational details ie modulesDB
+            
+            modules_var = []
+            user = users.find_one({"username" : session['username']})
+            
+            username = session['username']
+            location = users.find_one({"username" : session['username']})['office_loc']
+            img_loc = users.find_one({"username" : session['username']})['img_link']
+
+
+            # print(user['modules'])
+            for module in user['modules'] :
+                modules_var.append(module)
+            # print(modules_var)
+            current_teacher_modules = retrieve_user_modules(modules_var,'reg')
+            return render_template('home/homepage.html', current_teacher_modules = current_teacher_modules,username = username, location=location, img_loc=img_loc)
+
+        elif 's_no' in session :
+            users = mongo.db.users #initialise user DB
+
+            #### Retrieve all of the current lecturers personal details AND educational details ie modulesDB
+            
+            modules_var = []
+            user = users.find_one({"s_no" : session['s_no']})
+            
+            username = session['s_no']
+            # location = users.find_one({"username" : session['username']})['office_loc']
+            # img_loc = users.find_one({"username" : session['username']})['img_link']
+
+
+            # print(user['modules'])
+            for module in user['modules'] :
+                modules_var.append(module)
+            print(modules_var)
+           
+            current_student_modules = retrieve_user_modules(modules_var,'reg')
+            current_student_posts = retrieve_user_modules(modules_var,'post')
+
+            print(current_student_posts)
+            return render_template('home/feed.html', current_student_modules = current_student_modules,username = username, current_student_posts = current_student_posts)
+        else :
+            return redirect(url_for('signIn'))    
         
-        modules_var = []
-        user = users.find_one({"username" : session['username']})
-        
-        username = session['username']
-        location = users.find_one({"username" : session['username']})['office_loc']
-        img_loc = users.find_one({"username" : session['username']})['img_link']
+    return redirect(url_for('signIn'))
 
 
-        # print(user['modules'])
-        for module in user['modules'] :
-            modules_var.append(module)
-        # print(modules_var)
-        current_teacher_modules = retrieve_user_modules(modules_var)
-    return render_template('home/homepage.html', current_teacher_modules = current_teacher_modules,username = username, location=location, img_loc=img_loc)
 #Logout
 @app.route('/logout')
 def logout():
@@ -278,9 +315,9 @@ def logout():
 
 ########################     HELPER FUNCTIONS     #################
 
-def retrieve_user_modules(modules) :
+def retrieve_user_modules(modules,functype) :
     modulesDB = mongo.db.modules
-    print ("Length is : {}".format(len(modules)))
+    # print ("Length is : {}".format(len(modules)))
 
     ##### RETRIEVE ALL RELEVANT INFO FOR User-Specific Modules #####
 
@@ -295,44 +332,52 @@ def retrieve_user_modules(modules) :
 
         ###### DATE INPUTTED WRONG
 
-        # posts = []
-        # # for post in modulesDB.find_one({"mod_code" : modules}).sort("date",-1) :
-        # #     posts.append(post)
+        posts = []
+        for post in modulesDB.find_one({"mod_code" : modules}).sort("date",-1) :
+            posts.append(post)
         
-        # posts.append(modulesDB.find_one({"mod_code" : modulesDB})['posts']) 
+        posts.append(modulesDB.find_one({"mod_code" : modulesDB})['posts']) 
         module1 = {
             'mod_code' : mod_code,
             'mod_title' : mod_title,
-            # 'mod_posts' : posts,
+            'mod_posts' : posts,
             'owner' : owner
         }
-        print (module1)
+        # print (module1)
         return module1
     else :
         my_modules = []
+        all_posts = []
+        
         for module in modules :
-            print(module)
+            # print(module)
             mod_code = module
+
             mod_title = modulesDB.find_one({"mod_code" : module})['mod_title']
             owner = modulesDB.find_one({"mod_code" : module})['owner'] 
 
 
             ################### NEED TO FORMAT POSTS CORRECTLY MAYBE TO DO WITH DATE
-            # posts = []
-            # for post in modulesDB.find_one({"mod_code" : module}).sort("date",-1) :
-            #     posts.append(post)
+            posts = []
+            for post in modulesDB.find_one({"mod_code" : module})['posts'] :
+                posts.append(post)
+                all_posts.append(post)
+            posts = sorted(posts, key=lambda k: k['date'], reverse=True)
+           
             # posts = modulesDB.find_one({"mod_code" : module})['posts']
             modules_ready = {
                 'mod_code' : mod_code,
                 'mod_title' : mod_title,
-                # 'mod_posts' : posts,
+                'mod_posts' : posts,
                 'owner' : owner
             }
             my_modules.append(modules_ready)
-            
-        return my_modules
-
-
+        if(functype == 'reg') :
+            return my_modules
+        elif(functype == 'post') :
+            print('post called')
+            all_posts = sorted(all_posts, key=lambda k: k['date'], reverse=True)
+            return all_posts
     
 
            

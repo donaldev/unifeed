@@ -17,6 +17,19 @@ $(document).ready(function(){
       
     }
     
+
+    $('.btn-post').click(function(){
+
+      var mod_code = $(this).attr("data-id");
+
+      $('#module_from_id').val(mod_code);
+
+    })
+
+
+
+
+
     // $('.validate').on('click',function(){
     //   var selectedModules = $('.moduleInput');
     //   console.log(selectedModules);
@@ -53,52 +66,106 @@ $(document).ready(function(){
 
 
 
-      $('.checkModules').on('click', function(event){
 
-        var module1 = $('#module1').val();
-        var module2 = $('#module2').val();
-        var module3 = $('#module3').val();
-        var module4 = $('#module4').val();
-        var module5 = $('#module5').val();
-        var module6 = $('#module6').val();
-        var selectedModules = [module1,module2,module3,module4,module5,module6];
-        
+      // $('#module2').keyup(function(){
+      //   var inputModule = $(this).val();
+      //   inputModule = inputModule.toUpperCase();
+      //   console.log(inputModule);
+      //   data = {
+      //     module : inputModule
+      //   };
+
+      //   console.log(data);
+      //   $.ajax({
+      //       data : data,
+      //       type : 'POST',
+      //       url : '/checkModules'
+      //   }).done(function(data){
+      //       if (data == 'success'){
+      //         $(this).css('border','2px solid green');
+      //       }
+      //       else{
+      //         $(this).css('border','2px solid red');
+      //       }
+      //   });
+      //   event.preventDefault();
+      // });
+
+      // var delay = (function(){
+      //   var timer = 0;
+      //   return function(callback, ms){
+      //     clearTimeout (timer);
+      //     timer = setTimeout(callback, ms);
+      //   };
+      // })();
+
+      
+
+     
+      var validMods = [];
+      $('.module1').on('input',function(event){
+        // delay(function(){
+
+        var module1 = $(this).val();
+
+        var $self = $(this);
+
+         var selectedModules = [module1];
+
+        data = {
+          module1 :  module1
+
+        }; 
         $.ajax({
-            data : {
-                 module1 :  module1,
-                 module2 :  module2,
-                 module3 :  module3,
-                 module4 :  module4,
-                 module5 :  module5,
-                 module6 :  module6
-            },
+            data : data,
             type : 'POST',
             url : '/checkModules'
         }).done(function(data){
-          var incorrectMods = data.allModules[0].incorrect;
+          // var incorrectMods = data.allModules[0].incorrect;
           var correctMods = data.allModules[0].correct;
           
-          console.log(incorrectMods)
-           for (i=0;i<selectedModules.length;i++){
 
-               for(j=0;j<incorrectMods.length;j++){
-                   if( selectedModules[i].toUpperCase() == incorrectMods[j].toUpperCase())
-                      {
-                          var position = i+1
-                         if(selectedModules[i] != "")
-                          $('#module'+ position).css('border','2px solid red');
-                      }
-                    }
-                    for(k=0;k<correctMods.length;k++){
-                      if( selectedModules[i].toUpperCase() == correctMods[k].toUpperCase())
-                         {
-                             var position = i+1
+          if (module1 == correctMods[0]){
+          $self.css('border','2px solid green');
+          validMods.push(module1); 
+          
+          }
+          else{
+            $self.css('border','2px solid red');
+          }
+          $('#modules').val(validMods);
+          });
+          event.preventDefault();
+
+          
+        
+      });
+      
+
+
+
+
+
+              //  for(j=0;j<incorrectMods.length;j++){
+              //      if( selectedModules[i].toUpperCase() == incorrectMods[j].toUpperCase())
+              //         {
+              //             var position = i+1
+              //            if(selectedModules[i] != "")
+              //             $('#module'+ position).css('border','2px solid red');
+              //         }
+              //       }
+              //       for(k=0;k<correctMods.length;k++){
+              //         if( selectedModules[i].toUpperCase() == correctMods[k].toUpperCase())
+              //            {
+              //                var position = i+1
                             
-                             $('#module'+ position).css('border','2px solid green');
-                            //  $('.validMods').append("<li class='login loginButton'>"+ selectedModules[i]+ "</li>");
+              //                $('#module'+ position).css('border','2px solid green');
+              //               //  $('.validMods').append("<li class='login loginButton'>"+ selectedModules[i]+ "</li>");
+                            
 
-                         }
-                       }
+              //            }
+              //          }
+
                 
                     
                   // else 
@@ -111,7 +178,7 @@ $(document).ready(function(){
                   // }
              
 
-          }
+        
             
 
             // console.log(data)
@@ -121,7 +188,5 @@ $(document).ready(function(){
             // else {
             //   console.log("Good to go : " + data.allModules[1].correct);
             // }
-        });
-        event.preventDefault();
+        
       });
-    });

@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
+
 <link rel="stylesheet" href="../static/css/main.css" />
 		<!-- Header -->
         <header id="header">
@@ -15,16 +16,22 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-1"></div>
-            <div class="col-lg-3 profile_left opaque">
+            <div class="col-lg-2 profile_left opaque">
                     <div class="center">
+                        {%if 'username' in session %}
                         <img class="profiler" src="{{ url_for('static', filename='img/pp1.png') }}"></img>
-                        <h2 style="color:white">{{username}}</h2>
+                        {%endif%}
+                        {%if 's_no' in session %}
+                        <img class="profiler" src="{{ url_for('static', filename='img/pp2.png') }}"></img>
+                        {%endif%}
+                        <h3 style="color:white">{{username}}</h2>
                         <hr>
                         <div class="list-group">
-                            
+                                {%if 'username' in session %} 
                             <br>
                             <h5 style="color:white"> Office Location : {{location}}</h5>
                             <br>
+                                {% endif %}
                         </div>
                         <div class="today">
                                 <div class="today-piece  top  day"></div>
@@ -35,28 +42,68 @@
                     </div>    
             </div> 
             
-            <div class="col-lg-6 opaque"> 
+            <div class="col-lg-7 opaque"> 
                 <div class="row">
-                    <div class="col-lg-8"></div>
+                    <div class="col-lg-6"></div>
                     <div class="col-lg-2"><a class="inner_nav" href="{{url_for('home')}}">Modules</a> </div>
-                        
+                    {%if 'username' in session %}    
                     <div class="col-lg-2"><a class="inner_nav" href="#">Results</a> </div>
+                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
+                    {%endif%}
+                    {%if 's_no' in session %}    
+                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
+                    {%endif%}
+                    <div class="col-lg-1"></div>
                     <br>
                     <br>
                 </div>
+                <h1 center> Your Modules</h1>
+                <div style="float: right">
+                        <!-- <button type="button" value="Write Post" class="btn btn-success" data-toggle="modal" data-target="#postModal">Write Post</button> -->
+                    </div>
                 <div class="row">
-                    <div class="col-lg-3"></div> 
-                    <div class="col-lg-6"> 
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-6">
                         <div class="center">
-                            <h1 center> Your Modules</h1>
-                            {% if current_teacher_modules %}
                             <ul class="list-group">
-                                {% for module in current_teacher_modules %}
-                                <button type="button" class="list-group-item list-group-item-action title" style="text-align:center;">{{ module.mod_code }} - {{ module.mod_title }} </button> 
-                                <div class="showModinfo"> <br> </div>
+                                    {% if current_teacher_modules %}
+                            
+                                    {% for module in current_teacher_modules %}
+                                <li class="list-group-item w3-card-4 w3-dark-grey">
+                                    <div class="w3-container w3-center">
+                                        <div class="row">
+                                            <div class="col-lg-4"></div>
+                                            <div class="col-lg-4 circle">
+                                                 {{ module.mod_code }} 
+                                            </div>
+                                            <div class="col-lg-4"></div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-lg-3"> <button type="button" value="Write Post" class="btn btn-success btn-post" data-toggle="modal" data-target="#postModal" data-id="{{module.mod_code}}">Write Post </button>  </div>
+                                            <div class="col-lg-6"> Display Summary Results here </div>
+                                            <div class="col-lg-3"> <button type="button" value="Write Post" class="btn btn-primary btn-feedback" data-toggle="modal" data-target="#feedbackModal" data-id="{{module.mod_code}}">Feedback Form </button>  </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <br>
                                 {% endfor %}
-                            </ul>   
+                            </ul>
                             {% endif %}
+                        </div>
+
+                        
+                            {% if current_student_modules %}
+                           
+                                {% for module in current_student_modules %}
+                                <button type="button" class="list-group-item list-group-item-action title" style="text-align:center;">{{ module.mod_code }} - {{ module.mod_title }} <div class="posts" style="color:white">
+                                       
+                                    </div></button> 
+                                <div class="showModinfo"> <br> </div>
+                                
+                                {% endfor %}
+                            
+                            {% endif %}  
                         </div>
                     </div>
                 </div>
@@ -64,7 +111,34 @@
         </div>
     </div>        
 </section>
-</section>
+
+ <!-- Modal -->
+ <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     <div class="modal_space">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Write Post </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method=POST action="{{ url_for('mod_post') }}" id="modulePostForm">
+                        <input type="hidden" id="module_from_id" name="mod_opt">
+                        <textarea class="form-control col-xs-12" name="post"></textarea>
+                         
+                    
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Post</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>     
+
+
 <footer id="footer">
     <div class="inner">
         <div class="flex">
@@ -74,4 +148,6 @@
         </div>
     </div>
 </footer>
+
+{}
 {% endblock %}

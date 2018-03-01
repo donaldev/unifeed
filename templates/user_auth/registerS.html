@@ -13,83 +13,37 @@
     <!-- Banner -->
     <form method=POST action="{{ url_for('registerS') }}" id="registerSForm">
         <section id="banner1">
-            <!-- <h1>Login</h1>
-            <p>Please enter your Student Number / Lecturer username </p> -->
-            
-
             <div class="container-fluid">
-
                 <div class="row">
-                        <div class="col-lg-3"></div> 
-                        <div class="col-lg-6 opaque"> 
-                            <div class="row">
-                                    <div class="col-lg-3"></div> 
-                                    <div class="col-lg-6"> 
-                                       <div class="center">
-                                            <h1>Student Registration</h1>
-                                            <p>Please enter your Student Number </p>
-                                        
-                                            <div class="form-group">
-                                                <label class="formLabel" for="exampleInputEmail1">Student Number</label>
-                                                <input type="text" class="form-control" name="username" placeholder="Student Number">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Password</label>
-                                                <input type="password" class="form-control" name="pass" placeholder="Password">
-                                            </div>
-                            
-                                            <a href="#two" class=" loginButton login ">Next</a>
-                                        </form>
-                                       </div>
+                    <div class="col-lg-3"></div> 
+                    <div class="col-lg-6 opaque"> 
+                        <div class="row">
+                            <div class="col-lg-3"></div> 
+                            <div class="col-lg-6"> 
+                                <div class="center">
+                                    <h1>Student Registration</h1>
+                                    <p>Please enter your Student Number </p>
+                                    <div id="error"></div>
+                                    <div class="form-group">
+                                        <label class="formLabel" for="exampleInputEmail1">Student Number</label>
+                                        <input type="text" class="form-control logintext" name="username" placeholder="Student Number">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Password</label>
+                                        <input type="password" class="form-control logintext" name="pass" placeholder="Password">
+                                    </div>                        
+                                    <a href="#three" class="login loginButton">Next</a>
+                                </div>
                             </div>
-                            
-                            <br>
                         </div>
+                        <br>
+                    </div>
                 </div>
-
             </div>
-
         </section>
-        <section id="two" class="wrapper special">
 
-            <div class="container-fluid">
+        
 
-                <div class="row">
-                        <div class="col-lg-3"></div> 
-                        <div class="col-lg-6 opaque"> 
-                            <div class="row">
-                                    <div class="col-lg-3"></div> 
-                                    <div class="col-lg-6"> 
-                                       <div class="center">
-                                            <h1>Personal Details</h1>
-                                            <p>Tell us a little bit about yourself </p>
-                                        
-                                            <div class="form-group">
-                                                <label for="exampleInputModule1">Email</label>
-                                                <input type="text" class="form-control" name="email" placeholder="EG0000" required>
-                                            </div>
-                                            
-                            
-                                            <div class="form-group">
-                                                <label for="exampleInputModule3">Year</label>
-                                                <input type="text" class="form-control" name="Year" placeholder="EG0002">
-                                            </div>
-                                            <br>
-                                            <a href="#" class="loginButton login" onclick="document.getElementById('registerSForm').submit();">Submit</a>
-                                        </form>
-                                       </div>
-                                    </div>
-                            </div>
-                            
-                            <br>
-                        </div>
-                </div>
-
-            </div>
-
-        </section>
-        <form>
         <section id="three" class="wrapper special">
 
             <div class="container-fluid">
@@ -106,41 +60,44 @@
                                         
                                             <div class="form-group">
                                                 <label for="exampleInputModule1">Module Code:</label>
-                                                <input type="text" class="form-control" id = "module1" name="module1" placeholder="EG0000" required>
+                                                <input type="text" class="form-control module1 logintext" id = "module1" name="module1" placeholder="EG0000" required>
                                             </div>
                                             
                                             <div class="form-group">
                                                 <label for="exampleInputModule2">Module Code:</label>
-                                                <input type="text" class="form-control" id = "module2" name="module2" placeholder="EG0001" required>
+                                                <input type="text" class="form-control module1 logintext" id = "module2" name="module1" placeholder="EG0001" required>
                                             </div>
                             
                                             <div class="form-group">
                                                 <label for="exampleInputModule3">Module Code:</label>
-                                                <input type="text" class="form-control" id = "module3" name="module3" placeholder="EG0002">
+                                                <input type="text" class="form-control module1 logintext" id = "module3" name="module1" placeholder="EG0002">
                                             </div>
                             
                                             <div class="form-group">
                                                 <label for="exampleInputModule4">Module Code:</label>
-                                                <input type="text" class="form-control" id = "module4" name="module4" placeholder="EG0003">
+                                                <input type="text" class="form-control module1 logintext" id = "module4" name="module1" placeholder="EG0003">
                                             </div>
                             
                                             <div class="form-group">
                                                 <label for="exampleInputModule5">Module Code:</label>
-                                                <input type="text" class="form-control" id = "module5" name="module5" placeholder="EG0004">
+                                                <input type="text" class="form-control module1 logintext" id = "module5" name="module1" placeholder="EG0004">
                                             </div>
                                         
                                             <div class="form-group">
                                                 <label for="exampleInputModule6">Module Code:</label>
-                                                <input type="text" class="form-control" id = "module6" name="module6" placeholder="EG0005">
+                                                <input type="text" class="form-control module1 logintext" id = "module6" name="module1" placeholder="EG0005">
                                             </div>
                                             
-                                            <a href="#three" class="loginButton login checkModules">Validate</a>
+                                            <input type="hidden" name="modules" id="modules">    
+                                            <h3>Note : You will not be registered for any modules with a <p style="color:red">red border</p></h3>
+
+                                            
+                                            <button type="submit" class="loginButton login">Register</button>
                                             
         </form>
                                        </div>
                                     </div>
-                            </div>
-                            
+                                </div>
                             <br>
                         </div>
                 </div>
@@ -149,42 +106,18 @@
 
         </section>
 
-        <section id="three" class="wrapper special">
-
-            <div class="container-fluid">
-
-                <div class="row">
-                        <div class="col-lg-3"></div> 
-                        <div class="col-lg-6 opaqueStronger"> 
-                            <div class="row">
-                                    <div class="col-lg-3"></div> 
-                                    <div class="col-lg-6"> 
-                                       <div class="center">
-                                            <h1>Selected Modules</h1>
-                                            <p>Please check modules and submit </p>
-                                        
-                                            <ul class="validMods">
-
-                                            </ul>
-
-                                            <br>
-                                            <!--if incorrectModulesLength = 0 -->
-                                            <a href="#" class="loginButton login" onclick="document.getElementById('registerSForm').submit();">Submit</a>
-                                            <!-- Else if incorrectMoudlesLength >0 -->
-                                            <a href="#two" class="loginButton login "> Change Modules </a>
-                                        </form>
-                                       </div>
-                                    </div>
-                            </div>
-                            
-                            <br>
-                        </div>
-                </div>
-
-            </div>
-
-        </section>
-    </section>
+        {% if errormsg %}
+    
+        <script type="text/javascript">
+        
+            var error = '{{errormsg}}';
+            console.log(error);
+            document.getElementById("error").innerHTML += "Error: " +error;
+            document.getElementById("error").style.visibility = 'visible';
+    
+        
+        </script>
+        {% endif %}   
     <footer id="footer">
         <div class="inner">
             <div class="flex">

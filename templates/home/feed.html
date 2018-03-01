@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<link rel="stylesheet" href="../static/css/main.css" />
+		<!-- Header -->
+        <header id="header">
+            <div class="inner">
+                <a href="/" class="logo">unifeed.</a>
+                <nav id="nav"></nav>
+                    <a href="{{url_for('logout')}}">Log Out</a>
+            </nav>
+                <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+            </div>
+        </header>
+<section id="banner1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2 profile_left opaque">
+                    <div class="center">
+                        {%if 'username' in session %}
+                        <img class="profiler" src="{{ url_for('static', filename='img/pp1.png') }}"></img>
+                        {%endif%}
+                        {%if 's_no' in session %}
+                        <img class="profiler" src="{{ url_for('static', filename='img/pp2.png') }}"></img>
+                        {%endif%}
+                        <h3 style="color:white">{{username}}</h2>
+                        <hr>
+                        <div class="list-group">
+                                {%if 'username' in session %} 
+                            <br>
+                            <h5 style="color:white"> Office Location : {{location}}</h5>
+                            <br>
+                                {% endif %}
+                        </div>
+                        <div class="today">
+                                <div class="today-piece  top  day"></div>
+                                <div class="today-piece  middle  month"></div>
+                                <div class="today-piece  middle  date"></div>
+                                <div class="today-piece  bottom  year"></div>
+                        </div>
+                    </div>    
+            </div> 
+            
+            <div class="col-lg-7 opaque"> 
+                <div class="row">
+                    <div class="col-lg-7"></div>
+                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('home')}}">Modules</a> </div>
+                    {%if 'username' in session %}    
+                    <div class="col-lg-2"><a class="inner_nav" href="#">Results</a> </div>
+                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
+                    {%endif%}
+                    {%if 's_no' in session %}    
+                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
+                    {%endif%}
+                    <div class="col-lg-1"></div>
+                    <br>
+                    <br>
+                </div>
+                <h1 center> Your Feed</h1>
+                
+                <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-6">
+                        <div class="center">
+                            {%for post in current_student_posts%}
+                            <div class="feed-item ">
+                                
+                                <div class="post-mod-content">{{post.content}}</div>
+                                <div class="post-mod-owner">{{post.author}}</div>
+                                <div class="post-time">{{post.date}}</div>
+                            </div>
+                            <hr>
+                            {%endfor%}
+                        </div>
+
+                        
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        
+</section>
+
+
+
+
+<footer id="footer">
+    <div class="inner">
+        <div class="flex">
+            <div class="copyright">
+                &copy; unifeed 
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+{% endblock %}

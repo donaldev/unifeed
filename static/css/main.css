@@ -1586,7 +1586,7 @@
 /* Type */
 
 	body, input, select, textarea {
-		color: #9a9a9a;
+		color: black;
 		font-family: "Raleway", Arial, Helvetica, sans-serif;
 		font-size: 13pt;
 		font-weight: 300;
@@ -2566,13 +2566,7 @@
 		white-space: nowrap;
 	}
 
-		input[type="submit"]:hover,
-		input[type="reset"]:hover,
-		input[type="button"]:hover,
-		button:hover,
-		.button:hover {
-			background-color: #676767;
-		}
+
 
 		input[type="submit"]:active,
 		input[type="reset"]:active,
@@ -2631,6 +2625,7 @@
 		.profiler{
 			margin-top:1em;
 			border:1px solid black;
+			background-color:white;
 			/* border-radius:50%; */
 			max-width:15em;
 			opacity:0%;
@@ -2738,7 +2733,10 @@
 			line-height: 44px;
 			position: fixed;
 		}
-
+	.post_txt{
+		width:inherit;
+		display:none;
+	}
 	#header {
 		color: #d4e0ef;
 		cursor: default;
@@ -2965,7 +2963,7 @@
 
 	}
 	#banner1 {
-		padding: 12em 0 15em 0;
+		padding: 12em 0 5em 0; 
 		height:auto;
 		background-image:url("../img/bg-img/bgBlur.jpg");
 		background-size: cover;
@@ -2984,7 +2982,7 @@
 		background-repeat: no-repeat;
 	}
 	#three{
-		background-image:url("../img/bg-img/bg1Blur.jpg");
+		background-image:url("../img/bg-img/bgBlur.jpg");
 		background-size: cover;
 		background-position: top;
 		background-attachment: fixed;
@@ -2998,9 +2996,20 @@
 			margin: 0 0 0.5em 0;
 			padding: 0;
 		}
+
+.info{
+	height:20em;
+}
+
+.mod_code{
+	
+	width:10em;
+	background-color:white;
+}
+
+
 .opaque{
-	background-color:black;
-	opacity:.75;
+	background-color: rgba(0,0,0,0.7);
 	border-radius:20px;
 }
 .opaqueStronger{
@@ -3035,8 +3044,8 @@
 	text-decoration: underline;
 
 }
-.form-control{
-	color:white;
+.modal-content{
+	padding:3em;
 }
 		.item {
 			font-size: 20px;
@@ -3064,8 +3073,42 @@
 		  display:none;
 		  border:1px solid white;
 		}
-	
-
+		.feed-item{
+			margin:3em;
+			padding:2em;
+			background-color:lightgray;
+			color:black;
+		}
+		.white{
+			color:white;
+		}
+		.circle{
+			margin:0 auto;
+			border-radius:50%;
+			border:1px solid black;
+			width:8em;
+			height:8em;
+			line-height:8em;
+			
+			text-align:center;
+		}
+		.loginhome{
+		
+				display:inline-block;
+				border:3px solid white;
+				min-width:200px;
+				margin:.25em;
+			
+		}
+		.btn-post,.btn-feedback{
+			text-align: center;
+			padding:1em;
+		}
+		.module{
+			display:flex;
+			min-height:20em;
+			min-width:10em;
+		}
 		.login{
 			
 			display:inline-block;
@@ -3091,6 +3134,15 @@
 			color:white;
 			
 		}
+		.loginButton:hover{
+			text-decoration:none;
+			color:white;
+			opacity:.5;
+		}
+
+
+
+
 		#banner p {
 			font-size: 1em;
 			color: rgba(255, 255, 255, 0.55);

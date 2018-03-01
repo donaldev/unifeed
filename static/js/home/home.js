@@ -84,3 +84,16 @@ $('.day').text(dt.formats.pretty.a);
 $('.date').text(dt.formats.pretty.b);
 $('.month').text(dt.formats.pretty.c);
 $('.year').text(dt.formats.pretty.d);
+
+
+$(document).ready(function(){
+
+    $('.btn-post').click(function(){
+        $(this).next('.post_txt').slideToggle(200, 'swing');
+
+        // $('.post_txt').toggle('slow',function(){
+
+        // });
+    })
+
+})
