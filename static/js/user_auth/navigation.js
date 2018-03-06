@@ -23,6 +23,16 @@ $(document).ready(function(){
       var mod_code = $(this).attr("data-id");
 
       $('#module_from_id').val(mod_code);
+      
+
+    })
+
+    $('.btn-feedback').click(function(){
+
+      var mod_code = $(this).attr("data-id");
+
+      $('#module_from_id').val(mod_code);
+      $('#modcodefeed').html(mod_code);
 
     })
 

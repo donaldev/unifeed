@@ -240,11 +240,34 @@ def mod_post():
     post_ready = {
         'content' : post,
         'date' : time,
-        'author' : session['username']
+        'author' : session['username'],
+        'mod_code': module
     }
     modulesDB.update_one({'mod_code': module}, {'$push':{'posts':post_ready}})
     #  users.update_one({'email':session['email']}, {'$set': {'name': name, 'surname': surname}})
     return redirect(url_for('home'))
+
+#write post for module
+@app.route('/feedback_post',methods=['POST'])
+def feedback_post():
+    modulesDB = mongo.db.modules
+    
+    module = request.form['mod_opt']
+    post = request.form['post']
+    date = datetime.datetime.now()
+    time = date.strftime(" %d-%m-%Y %H:%M")
+
+    post_ready = {
+        'content' : post,
+        'date' : time,
+        'author' : session['username'],
+        'mod_code': module
+    }
+    modulesDB.update_one({'mod_code': module}, {'$push':{'posts':post_ready}})
+    #  users.update_one({'email':session['email']}, {'$set': {'name': name, 'surname': surname}})
+    return redirect(url_for('home'))
+
+
 
 @app.route('/myfeed', methods=['GET'])
 def myfeed():
@@ -264,8 +287,7 @@ def myfeed():
             user = users.find_one({"username" : session['username']})
             
             username = session['username']
-            location = users.find_one({"username" : session['username']})['office_loc']
-            img_loc = users.find_one({"username" : session['username']})['img_link']
+
 
 
             # print(user['modules'])
@@ -273,7 +295,9 @@ def myfeed():
                 modules_var.append(module)
             # print(modules_var)
             current_teacher_modules = retrieve_user_modules(modules_var,'reg')
-            return render_template('home/homepage.html', current_teacher_modules = current_teacher_modules,username = username, location=location, img_loc=img_loc)
+            current_posts = retrieve_user_modules(modules_var,'post')
+
+            return render_template('home/homepage.html', current_teacher_modules = current_teacher_modules,username = username, current_teacher_posts=current_posts)
 
         elif 's_no' in session :
             users = mongo.db.users #initialise user DB
@@ -291,13 +315,13 @@ def myfeed():
             # print(user['modules'])
             for module in user['modules'] :
                 modules_var.append(module)
-            print(modules_var)
+            # print(modules_var)
            
             current_student_modules = retrieve_user_modules(modules_var,'reg')
-            current_student_posts = retrieve_user_modules(modules_var,'post')
+            current_posts = retrieve_user_modules(modules_var,'post')
 
-            print(current_student_posts)
-            return render_template('home/feed.html', current_student_modules = current_student_modules,username = username, current_student_posts = current_student_posts)
+           
+            return render_template('home/feed.html', current_student_modules = current_student_modules,username = username, current_student_posts = current_posts)
         else :
             return redirect(url_for('signIn'))    
         

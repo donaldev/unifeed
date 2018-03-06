@@ -2621,12 +2621,19 @@
 		.profile_left{
 			margin-left:5em;
 			padding:1em;
+			height: 53em;
+		}
+		.homecont{
+			padding:1em;
+			height: 53em;
+			overflow:scroll;
 		}
 		.profiler{
 			margin-top:1em;
 			border:1px solid black;
 			background-color:white;
 			/* border-radius:50%; */
+			max-height:10em;
 			max-width:15em;
 			opacity:0%;
 		}
@@ -3092,6 +3099,24 @@
 			
 			text-align:center;
 		}
+
+		.sidenav-item{
+			font-size:1.5em;
+			border:solid 1px white;
+			border-radius:5px;
+			font-style:bold;
+			padding:.4em;
+		}
+		.sidenav-item:hover{
+			
+			border:2px solid white;
+		}
+		.active-li{
+			color:rgb(166, 129, 129)!important;
+			/* border:1px solid rgb(166, 129, 129); */
+		}
+		
+
 		.loginhome{
 		
 				display:inline-block;
@@ -3155,10 +3180,15 @@
 
 		/* Today
    -------------------------------------------------- */
+.today{
+	max-height:10em;
+	vertical-align: bottom;
+}
 
 .today-piece {
     border-radius: 0.25rem;
-    padding: 1.6rem;
+	padding: 1.6rem;
+	max-height:3em;
     font-size: 1.25em;
     text-align: center;
     background: white;
@@ -3197,9 +3227,9 @@
     font-size: 0.85em;
     font-weight: 500;
     letter-spacing: 0.35em;
-    text-transform: uppercase;
+    
     color: white;
-    background: rgb(49, 154, 196);
+    background:#A68181;
 }
 .month {
     padding-top: 1.75rem;
@@ -3212,7 +3242,7 @@
 	padding-top: 0;
 	font-weight: bold;
     padding-bottom: 1.75rem;
-    font-size: 3em;
+    font-size: 2em;
     font-weight: 100;
 }	
 

@@ -26,13 +26,31 @@
                         {%endif%}
                         <h3 style="color:white">{{username}}</h2>
                         <hr>
-                        <div class="list-group">
-                                {%if 'username' in session %} 
+
+                        <div class="sidebar-nav">
+                            {%if 'username' in session%}
+                            <ul>
+                            <li style="list-style-type:none;"><a class="sidenav-item" href="{{url_for('home')}}" style="text-decoration: none; color:white;"> <span class="glyphicon glyphicon-home white"></span> &nbsp;&nbsp;Home</a></li>
                             <br>
-                            <h5 style="color:white"> Office Location : {{location}}</h5>
                             <br>
-                                {% endif %}
-                        </div>
+                            <li style="list-style-type:none;"><a href="#" class="sidenav-item" style="text-decoration: none; color:white;"><i class="fa fa-pie-chart white"></i> &nbsp;&nbsp;Results</a></li>
+                            <br>
+                            <br>
+                            <li style="list-style-type:none;"><a href="{{url_for('myfeed')}}" class="sidenav-item active-li"style="text-decoration: none; color:white;"><span class="glyphicon glyphicon-th-list active-li"></span> &nbsp;&nbsp; Feed</a></li>
+                            </ul>
+                            {%endif%}
+                            {%if 's_no' in session%}
+                            <ul>
+                            <li style="list-style-type:none;"><a class="sidenav-item " href="{{url_for('home')}}" style="text-decoration: none; color:white;"><span class="glyphicon glyphicon-home white"></span> &nbsp;&nbsp;Home</a></li>
+                            <br>
+                            <br>
+                            <li style="list-style-type:none;"> <a class="sidenav-item active-li" href="{{url_for('myfeed')}} active-li" style="text-decoration: none; color:white;"><span class="glyphicon glyphicon-th-list active-li"></span>  &nbsp;&nbsp;Feed</a></li>
+                            </ul>   
+                            {%endif%}
+                               
+    
+    
+                            </div>
                         <div class="today">
                                 <div class="today-piece  top  day"></div>
                                 <div class="today-piece  middle  month"></div>
@@ -42,8 +60,8 @@
                     </div>    
             </div> 
             
-            <div class="col-lg-7 opaque"> 
-                <div class="row">
+            <div class="col-lg-7 opaque homecont"> 
+                <!-- <div class="row">
                     <div class="col-lg-7"></div>
                     <div class="col-lg-2"><a class="inner_nav" href="{{url_for('home')}}">Modules</a> </div>
                     {%if 'username' in session %}    
@@ -56,8 +74,8 @@
                     <div class="col-lg-1"></div>
                     <br>
                     <br>
-                </div>
-                <h1 center> Your Feed</h1>
+                </div> -->
+                <h1 class="white" style="font-size:3em;"> My Feed</h1>
                 
                 <div class="row">
                         <div class="col-lg-3"></div>
@@ -65,7 +83,17 @@
                         <div class="center">
                             {%for post in current_student_posts%}
                             <div class="feed-item ">
-                                
+                                <div class="post-mod_code">{{post.mod_code}}</div>
+                                <div class="post-mod-content">{{post.content}}</div>
+                                <div class="post-mod-owner">{{post.author}}</div>
+                                <div class="post-time">{{post.date}}</div>
+                            </div>
+                            <hr>
+                            {%endfor%}
+
+                            {%for post in current_teacher_posts%}
+                            <div class="feed-item ">
+                                <div class="post-mod_code">{{post.mod_code}}</div>
                                 <div class="post-mod-content">{{post.content}}</div>
                                 <div class="post-mod-owner">{{post.author}}</div>
                                 <div class="post-time">{{post.date}}</div>
