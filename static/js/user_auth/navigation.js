@@ -18,12 +18,21 @@ $(document).ready(function(){
     }
     
 
+
+    $('.btn-startFeed').click(function(){
+
+      var form_name = $(this).attr("data-id")
+
+      $('formname').val(form_name);
+      $('#modcodefeed').html(mod_code);
+    })
+
     $('.btn-post').click(function(){
 
       var mod_code = $(this).attr("data-id");
-
-      $('#module_from_id').val(mod_code);
       
+      $('#module_from_id').val(mod_code);
+      $('#modcodefeed').html(mod_code);
 
     })
 
@@ -31,7 +40,8 @@ $(document).ready(function(){
 
       var mod_code = $(this).attr("data-id");
 
-      $('#module_from_id').val(mod_code);
+      
+      $('#module_from_id2').val(mod_code);
       $('#modcodefeed').html(mod_code);
 
     })

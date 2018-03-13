@@ -112,7 +112,7 @@ def register():
                     return redirect(url_for('home'))
                 else: #otherwise redirect them to same page plus pass in error msg
                     error_msg = 'Invalid enrollment key, please try again'
-                    print(error_msg)
+                    
                     return render_template('user_auth/register.html', errormsg=error_msg)
             else :
                 error_msg = 'Not a valid username'
@@ -120,7 +120,7 @@ def register():
 
         #this is the else for the check to see if user is registered
         error_msg = 'This username already exists, please sign in or contact administrator for help'
-        print(error_msg) 
+        
         return render_template('user_auth/register.html', errormsg=error_msg)
        
 
@@ -159,7 +159,7 @@ def registerS():
         existing_user = users.find_one({'s_no' : username_var})
         modules = request.form['modules']
         modules = modules.split(",")
-        print(modules)
+        # print(modules)
 
 
 
@@ -216,10 +216,10 @@ def home() :
             # print(user['modules'])
             for module in user['modules'] :
                 modules_var.append(module)
-            print(modules_var)
+            # print(modules_var)
            
             current_student_modules = retrieve_user_modules(modules_var,'reg')
-            print(current_student_modules)
+            # print(current_student_modules)
             return render_template('home/homepage.html', current_student_modules = current_student_modules,username = username)
         else :
             return redirect(url_for('signIn'))    
@@ -245,34 +245,71 @@ def mod_post():
     }
     modulesDB.update_one({'mod_code': module}, {'$push':{'posts':post_ready}})
     #  users.update_one({'email':session['email']}, {'$set': {'name': name, 'surname': surname}})
-    return redirect(url_for('home'))
+    return redirect(url_for('myfeed'))
+
+
+
+
+
 
 #write post for module
 @app.route('/feedback_post',methods=['POST'])
 def feedback_post():
     modulesDB = mongo.db.modules
     
-    module = request.form['mod_opt']
-    post = request.form['post']
-    date = datetime.datetime.now()
-    time = date.strftime(" %d-%m-%Y %H:%M")
+    module_code = request.form['mod_opt']
+    form_name = request.form['form_name']
+    #only necessary if I'm adding a timeout to the feedback forms
+    # date = datetime.datetime.now()
+    # time = date.strftime(" %d-%m-%Y %H:%M")
 
-    post_ready = {
-        'content' : post,
-        'date' : time,
-        'author' : session['username'],
-        'mod_code': module
+    form_ready = {
+        'title' : form_name,
+        'type' : "weekly",
+        'q1' : [],
+        'q2' : [],
+        'q3' : [],
+        'q4' : [],
+        'q5' : []
     }
-    modulesDB.update_one({'mod_code': module}, {'$push':{'posts':post_ready}})
+    # print(form_ready)
+    modulesDB.update({'mod_code': module_code}, {'$push':
+                                                            { 
+                                                                'feedback': {
+                                                                            '$each':[form_ready],
+                                                                            '$position': 0
+                                                                        }
+                                                            }
+                                                    }
+                                            )
+    modulesDB.update_one({'mod_code' : module_code}, {'$set':{'active' : True}})
     #  users.update_one({'email':session['email']}, {'$set': {'name': name, 'surname': surname}})
     return redirect(url_for('home'))
 
+
+@app.route('/feedback_submit', methods=['POST'])
+def feedback_submit():
+
+    modulesDB = mongo.db.modules
+
+
+
+
+@app.route('/close_feedback', methods=['POST'])
+def close_feedback():
+
+    modulesDB = mongo.db.modules
+
+ 
+    module_code = request.form['mod_opt']
+    modulesDB.update_one({'mod_code' : module_code}, {'$set':{'active' : False}})
+    return redirect(url_for('home'))
 
 
 @app.route('/myfeed', methods=['GET'])
 def myfeed():
 
-    modulesDB = mongo.db.modules
+    # modulesDB = mongo.db.modules
     users = mongo.db.users
 
 
@@ -296,8 +333,11 @@ def myfeed():
             # print(modules_var)
             current_teacher_modules = retrieve_user_modules(modules_var,'reg')
             current_posts = retrieve_user_modules(modules_var,'post')
+            # current_feedback = retrieve_user_modules(modules_var,'feedback')
+            # print(current_feedback)
+            # print(current_posts)
 
-            return render_template('home/homepage.html', current_teacher_modules = current_teacher_modules,username = username, current_teacher_posts=current_posts)
+            return render_template('home/feed.html', current_teacher_modules = current_teacher_modules,username = username, current_teacher_posts=current_posts)
 
         elif 's_no' in session :
             users = mongo.db.users #initialise user DB
@@ -328,6 +368,9 @@ def myfeed():
     return redirect(url_for('signIn'))
 
 
+
+
+
 #Logout
 @app.route('/logout')
 def logout():
@@ -350,8 +393,9 @@ def retrieve_user_modules(modules,functype) :
     if len(modules[0]) == 1 :
         
         mod_code = modules
-        mod_title = modulesDB.find_one({"mod_code" : modules})['mod_title']
-        owner = modulesDB.find_one({"mod_code" : modules})['owner'] 
+        mod_title = modulesDB.find_one({"mod_code" : mod_code})['mod_title']
+        owner = modulesDB.find_one({"mod_code" : mod_code})['owner'] 
+        active = modulesDB.find_one({"mod_code" : mod_code})['active']
 
 
         ###### DATE INPUTTED WRONG
@@ -365,13 +409,15 @@ def retrieve_user_modules(modules,functype) :
             'mod_code' : mod_code,
             'mod_title' : mod_title,
             'mod_posts' : posts,
-            'owner' : owner
+            'owner' : owner,
+            'active' : active
         }
         # print (module1)
         return module1
     else :
         my_modules = []
         all_posts = []
+
         
         for module in modules :
             # print(module)
@@ -379,9 +425,16 @@ def retrieve_user_modules(modules,functype) :
 
             mod_title = modulesDB.find_one({"mod_code" : module})['mod_title']
             owner = modulesDB.find_one({"mod_code" : module})['owner'] 
+            active = modulesDB.find_one({"mod_code" : module})['active']
+           
+            # active_feed = modulesDB.find({"$and" : [{"mod_code" : module},
+            #                                         {"status" : "active"}]})
+            
 
 
-            ################### NEED TO FORMAT POSTS CORRECTLY MAYBE TO DO WITH DATE
+
+
+
             posts = []
             for post in modulesDB.find_one({"mod_code" : module})['posts'] :
                 posts.append(post)
@@ -393,15 +446,19 @@ def retrieve_user_modules(modules,functype) :
                 'mod_code' : mod_code,
                 'mod_title' : mod_title,
                 'mod_posts' : posts,
-                'owner' : owner
+                'owner' : owner,
+                'active' : active
             }
             my_modules.append(modules_ready)
         if(functype == 'reg') :
             return my_modules
         elif(functype == 'post') :
-            print('post called')
+            
             all_posts = sorted(all_posts, key=lambda k: k['date'], reverse=True)
             return all_posts
+        
+        # elif(functype == 'feedback')
+
     
 
            

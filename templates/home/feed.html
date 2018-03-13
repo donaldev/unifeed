@@ -15,8 +15,8 @@
 <section id="banner1">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-2 profile_left opaque">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2 profile_left opaque">
                     <div class="center">
                         {%if 'username' in session %}
                         <img class="profiler" src="{{ url_for('static', filename='img/pp1.png') }}"></img>
@@ -60,26 +60,26 @@
                     </div>    
             </div> 
             
-            <div class="col-lg-7 opaque homecont"> 
+            <div class="col-sm-7 opaque homecont"> 
                 <!-- <div class="row">
-                    <div class="col-lg-7"></div>
-                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('home')}}">Modules</a> </div>
+                    <div class="col-sm-7"></div>
+                    <div class="col-sm-2"><a class="inner_nav" href="{{url_for('home')}}">Modules</a> </div>
                     {%if 'username' in session %}    
-                    <div class="col-lg-2"><a class="inner_nav" href="#">Results</a> </div>
-                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
+                    <div class="col-sm-2"><a class="inner_nav" href="#">Results</a> </div>
+                    <div class="col-sm-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
                     {%endif%}
                     {%if 's_no' in session %}    
-                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
+                    <div class="col-sm-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
                     {%endif%}
-                    <div class="col-lg-1"></div>
+                    <div class="col-sm-1"></div>
                     <br>
                     <br>
                 </div> -->
                 <h1 class="white" style="font-size:3em;"> My Feed</h1>
                 
                 <div class="row">
-                        <div class="col-lg-3"></div>
-                        <div class="col-lg-6">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6">
                         <div class="center">
                             {%for post in current_student_posts%}
                             <div class="feed-item ">

@@ -1656,7 +1656,7 @@
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		color: #5385c1;
+		
 		font-weight: 300;
 		line-height: 1.5;
 		margin: 0 0 1em 0;
@@ -3127,6 +3127,11 @@
 		}
 		.btn-post,.btn-feedback{
 			text-align: center;
+			padding:1em;
+		}
+		.student_module{
+			background-color:white;
+			border-radius:2em;
 			padding:1em;
 		}
 		.module{

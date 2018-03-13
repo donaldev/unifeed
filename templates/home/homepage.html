@@ -15,8 +15,8 @@
 <section id="banner1">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-2 profile_left opaque">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2 profile_left opaque">
                     <div class="center">
                         {%if 'username' in session %}
                         <img class="profiler" src="{{ url_for('static', filename='img/pp1.png') }}"></img>
@@ -64,18 +64,18 @@
                     </div>    
             </div> 
             
-            <div class="col-lg-7 opaque homecont"> 
+            <div class="col-sm-7 opaque homecont"> 
                 <!-- <div class="row">
-                    <div class="col-lg-6"></div>
-                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('home')}}">Modules</a> </div>
+                    <div class="col-sm-6"></div>
+                    <div class="col-sm-2"><a class="inner_nav" href="{{url_for('home')}}">Modules</a> </div>
                     {%if 'username' in session %}    
-                    <div class="col-lg-2"><a class="inner_nav" href="#">Results</a> </div>
-                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
+                    <div class="col-sm-2"><a class="inner_nav" href="#">Results</a> </div>
+                    <div class="col-sm-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
                     {%endif%}
                     {%if 's_no' in session %}    
-                    <div class="col-lg-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
+                    <div class="col-sm-2"><a class="inner_nav" href="{{url_for('myfeed')}}">Feed</a> </div>
                     {%endif%}
-                    <div class="col-lg-1"></div>
+                    <div class="col-sm-1"></div>
                     <br>
                     <br>
                 </div> -->
@@ -84,8 +84,8 @@
                         <!-- <button type="button" value="Write Post" class="btn btn-success" data-toggle="modal" data-target="#postModal">Write Post</button> -->
                     </div>
                 <div class="row">
-                        <div class="col-lg-3"></div>
-                        <div class="col-lg-6">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6">
                         <div class="center">
                             <ul class="list-group">
                                     {% if current_teacher_modules %}
@@ -94,17 +94,25 @@
                                 <li class="list-group-item w3-card-4 w3-dark-grey">
                                     <div class="w3-container w3-center">
                                         <div class="row">
-                                            <div class="col-lg-4"></div>
-                                            <div class="col-lg-4 circle">
+                                            <div class="col-sm-4"></div>
+                                            <div class="col-sm-4 circle">
                                                  {{ module.mod_code }} 
                                             </div>
-                                            <div class="col-lg-4"></div>
+                                            <div class="col-sm-4"></div>
                                         </div>
                                         <hr>
                                         <div class="row">
-                                            <div class="col-lg-3"> <button type="button" value="Write Post" class="btn btn-success btn-post" data-toggle="modal" data-target="#postModal" data-id="{{module.mod_code}}">Write Post </button>  </div>
-                                            <div class="col-lg-6"> Display Summary Results here </div>
-                                            <div class="col-lg-3"> <button type="button" value="" class="btn btn-primary btn-feedback" data-toggle="modal" data-target="#feedbackModal" data-id="{{module.mod_code}}">Feedback Form </button>  </div>
+                                            <div class="col-sm-3"> <button type="button" value="Write Post" class="btn btn-success btn-post" data-toggle="modal" data-target="#postModal" data-id="{{module.mod_code}}">Write Post </button>  </div>
+                                            <div class="col-sm-6"> Display Summary Results here </div>
+                                            {% if module.active == True %}
+                                            <form method=POST action="{{ url_for('close_feedback') }}" id="modulePostForm">
+                                                <input type="hidden" name="mod_opt" value="{{module.mod_code}}">
+                                                <div class="col-sm-3"><button type="submit" class="btn btn-danger">Close Feedback</button></div>
+                                            </form>
+                                            {% endif %}
+                                            {% if module.active == False %}
+                                            <div class="col-sm-3"> <button type="button" value="" class="btn btn-primary btn-feedback" data-toggle="modal" data-target="#feedbackModal" data-id="{{module.mod_code}}">Feedback Form </button>  </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </li>
@@ -118,14 +126,44 @@
                             {% if current_student_modules %}
                            
                                 {% for module in current_student_modules %}
-                                <button type="button" class="list-group-item list-group-item-action title" style="text-align:center;">{{ module.mod_code }} - {{ module.mod_title }} <div class="posts" style="color:white">
-                                       
-                                    </div></button> 
-                                <div class="showModinfo"> <br> </div>
+                                <!-- <button class="list-group-item list-group-item-action title" style="text-align:center;">{{ module.mod_code }} - {{ module.mod_title }} <div class="posts" style="color:white">
+                                        {% if module.active == True %}
+                                        <button href="#" class="btn btn-success btn-md">
+                                            <span class="glyphicon glyphicon-edit white"></span> Feedback 
+                                        </button>
+                                        {%endif%}
+                                    </button> 
+                                <div class="showModinfo"> <br> </div> -->
+
+                                
+                                <div class="row student_module">
+
+                                    <div class="col-sm-3" style="border-radius:2px;background-color:#A68181;"> {{ module.mod_code }} </div>
+                                    <div class="col-sm-9"> {{ module.mod_title }}</div>
+                                    <div></div>
+                                    
+                                    <div class="col-sm-12" style="border-top:1px solid black;">
+                                        <br>
+                                        <div class="row">
+                                                <div class="col-sm-6"><span class="glyphicon glyphicon-user"></span> &nbsp;{{module.owner}}</div>
+                                                {% if module.active == True %}
+                                                <div class="col-sm-6">
+                                                    <button type="submit" href="#" class="btn btn-success btn-startFeed btn-sm" data-toggle="modal" data-target="#studentFeedbackModal" data-id="{{module.active_feed}}">
+                                                    <span class="glyphicon glyphicon-edit white"></span> Feedback 
+                                                    </button> </div>
+                                                {% endif %}
+                                                
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+
                                 
                                 {% endfor %}
                             
-                            {% endif %}  
+                            {% endif %}
+                       
                         </div>
                     </div>
                 </div>
@@ -134,37 +172,64 @@
     </div>        
 </section>
 
- <!-- Modal -->
- <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-     <div class="modal_space">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Write Post </h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method=POST action="{{ url_for('mod_post') }}" id="modulePostForm">
-                        <input type="hidden" id="module_from_id" name="mod_opt">
-                        <textarea class="form-control col-xs-12" name="post"></textarea>
-                         
-                    
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Post</button>
-                        </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>     
 
 
-
-<!-- SECOND MODAL -->
- <!-- Modal -->
- <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal_space">
+           <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                       <h4 class="modal-title" id="myModalLabel">Write Post : <div id="modcodefeed"></div>  </h4>
+                       </div>
+                       <div class="modal-body">
+                           <form method=POST action="{{ url_for('mod_post') }}" id="modulePostForm">
+                           <input type="hidden" id="module_from_id" name="mod_opt">
+                           <textarea class="form-control col-xs-12" name="post"></textarea>
+                            
+                       
+                       </div>
+                       <div class="modal-footer">
+                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                       <button type="submit" class="btn btn-success">Post</button>
+                           </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>     
+   
+   
+   
+   <!-- SECOND MODAL -->
+    <!-- Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal_space">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Post Feedback Form:  <div id="modcodefeed"></div> </h4>
+                      </div>
+                      <div class="modal-body">
+                          <form method=POST action="{{ url_for('feedback_post') }}" id="modulePostForm">
+                          <input type="hidden" id="module_from_id2" name="mod_opt">
+                          <input type="text" class="form-control" name="form_name" placeholder="form1week1">
+                           
+                      
+                      </div>
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-success">Post</button>
+                          </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+   </div>
+   
+   <div class="modal fade" id="studentFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal_space">
        <div class="modal-dialog">
            <div class="modal-content">
@@ -173,10 +238,11 @@
                    <h4 class="modal-title" id="myModalLabel">Post Feedback Form:  <div id="modcodefeed"></div> </h4>
                    </div>
                    <div class="modal-body">
-                       <form method=POST action="{{ url_for('mod_post') }}" id="modulePostForm">
-                       <input type="hidden" id="module_from_id" name="mod_opt">
-                       <input type="text" class="form-control" placeholder="form1week1">
-                        
+                       <form method=POST action="{{ url_for('feedback_submit') }}" id="modulePostForm">
+                       <input type="hidden" id="formname" name="form_name">
+                       <!-- <input type="text" class="form-control" name="form_name" placeholder="form1week1"> -->
+                        <label for="form_name">How would you rate this module out of 5?</label>
+                       <input type="text" class="form-control" name="form_name" placeholder="4.5">
                    
                    </div>
                    <div class="modal-footer">
@@ -187,7 +253,9 @@
            </div>
        </div>
    </div>
-</div>     
+</div>
+
+ 
 
 <footer id="footer">
     <div class="inner">
