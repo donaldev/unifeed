@@ -1,0 +1,175 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<link rel="stylesheet" href="../static/css/main.css" />
+		<!-- Header -->
+        <header id="header">
+            <div class="inner">
+                <a href="/" class="logo">unifeed.</a>
+                <nav id="nav"></nav>
+                    <a href="{{url_for('logout')}}">Log Out</a>
+                </nav>
+                <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+            </div>
+        </header>
+<section id="banner1" scroll="no" style="overflow: hidden">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2 profile_left opaque">
+                    <div class="center">
+                        {%if 'username' in session %}
+                        <img class="profiler" src="{{ url_for('static', filename='img/pp1.png') }}"></img>
+                        
+                        {%endif%}
+                        {%if 's_no' in session %}
+                        <img class="profiler" src="{{ url_for('static', filename='img/pp2.png') }}"></img>
+                        {%endif%}
+                        <h3 style="color:white">{{username}}</h3>
+   
+                        <hr>
+                        
+                        <div class="sidebar-nav">
+                                {%if 'username' in session%}
+                                <ul>
+                                <li style="list-style-type:none;"><a class="sidenav-item" href="{{url_for('home')}}" style="text-decoration: none; color:white;"> <span class="glyphicon glyphicon-home white "></span>   &nbsp;&nbsp;Home</a></li>
+                                <br>
+                                <br>
+                                <li style="list-style-type:none;"><a href="#" class="sidenav-item active-li" style="text-decoration: none; color:white;"><i class="fa fa-pie-chart"></i> &nbsp;&nbsp;Results</a></li>
+                                <br>
+                                <br>
+                                <li style="list-style-type:none;"><a href="{{url_for('myfeed')}}" class="sidenav-item" style="text-decoration: none; color:white;"><span class="glyphicon glyphicon-th-list white"></span>  &nbsp;&nbsp;Feed</a></li>
+                                </ul>
+                                {%endif%}
+                                {%if 's_no' in session%}
+                                <ul>
+                                <li style="list-style-type:none;"><a class="sidenav-item active-li" href="{{url_for('home')}}" style="text-decoration: none; color:white;"><span class="glyphicon glyphicon-home white active-li"></span> &nbsp;&nbsp;Home</a></li>
+                                <br>
+                                <br>
+                                <li style="list-style-type:none;"> <a class="sidenav-item" href="{{url_for('myfeed')}}" style="text-decoration: none; color:white;"><span class="glyphicon glyphicon-th-list white"></span>  &nbsp;&nbsp;Feed</a></li>
+                                </ul>   
+                                {%endif%}
+
+
+                        </div>
+
+
+
+                        <div class="today">
+                                <div class="today-piece  top  day"></div>
+                                <div class="today-piece  middle  month"></div>
+                                <div class="today-piece  middle  date"></div>
+                                <div class="today-piece  bottom  year"></div>
+                        </div>
+                    </div>    
+            </div> 
+            
+            <div class="col-sm-7 opaque homecont"> 
+                <h1 class="white" style="font-size:3em;"> My Results</h1>
+                
+                <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6">
+                        <div class="center">
+                            
+                                
+                                        
+                                        <div class="col-sm-6"><button  href="#" class="btn btn-success btn-startFeed btn-sm" data-toggle="modal" data-target="#resultsModal">Graph Me!</button></div>
+        
+                                <br>
+                                <br>
+                            <div class="row">
+           
+
+                            <div class="modal fade "id="resultsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal_space">
+                                       <div class="modal-dialog modal-lg-size">
+                                           <div class="modal-content modal-lg-size">
+                                               <div class="modal-header">
+                                                    
+                                                   <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button></button>
+                                                   <h4 class="modal-title" id="myModalLabel"> Graphical Results:  </h4>
+                                                   <div class="modal-body">
+                                                        <div class="col-sm-3"></div>
+                                                        <div class="col-sm-6">
+                                                            <div class="center">
+                                                        <div class="container">
+                                                            <div class="row" style="margin-left:-9em;">
+                                                                <div class="embed">
+                                                                <embed  type="image/svg+xml" src={{graph_data|safe}} class="graph_line"/>
+                                                                </div>
+                                                                <br>
+                                                                <div class="embed">
+                                                                <embed  type="image/svg+xml" src={{graph_data1|safe}} class="graph_line"/>
+                                                                </div>
+                                                                <br>
+                                                                <div class="embed">
+                                                                <embed  type="image/svg+xml" src={{graph_data2|safe}} class="graph_line"/>
+                                                                </div>
+                                                            </div>
+                                                            </div>    
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3"></div>
+                                                   </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                </div>
+
+
+                           {% if results%}
+                                {%for result in results%}
+                                    <div class="col-sm-12">
+                                        {% if result.results %}
+                                        <div class="student_module">
+                                           <h2 style="text-decoration:underline">{{result.mod_code}}</h2>
+                                                {%for quiz in result.results%}
+                                            <div class="per_feedback" style="border:1px solid black">
+                                            <h2>{{quiz.title}}</h2>    
+                                            <h3>Overall Satisfaction : {{quiz.total}}</h3>
+                                                <h3>Additional Comments: </h3>
+                                                    <ul>
+                                                        {% for comment in quiz.q2 %}
+
+                                                           <li> {{ comment }}</li>
+
+                                                        {%endfor%}
+                                                    </ul>
+                                                </div>    
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+
+                                    </div>
+                                {%endfor%}
+                            {% endif %}
+                                   
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>        
+</section>
+
+
+
+
+ 
+
+<footer id="footer">
+    <div class="inner">
+        <div class="flex">
+            <div class="copyright">
+                &copy; unifeed 
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+{% endblock %}

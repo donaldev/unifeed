@@ -2080,18 +2080,7 @@
 	}
 
 	input[type="checkbox"],
-	input[type="radio"] {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
-		display: block;
-		float: left;
-		margin-right: -2em;
-		opacity: 0;
-		width: 1em;
-		z-index: -1;
-	}
+
 
 		input[type="checkbox"] + label,
 		input[type="radio"] + label {
@@ -2107,14 +2096,14 @@
 		}
 
 			input[type="checkbox"] + label:before,
-			input[type="radio"] + label:before {
+			/* input[type="radio"] + label:before {
 				-moz-osx-font-smoothing: grayscale;
 				-webkit-font-smoothing: antialiased;
 				font-family: FontAwesome;
 				font-style: normal;
 				font-weight: normal;
 				text-transform: none !important;
-			}
+			} */
 
 			input[type="checkbox"] + label:before,
 			input[type="radio"] + label:before {
@@ -2972,6 +2961,7 @@
 	#banner1 {
 		padding: 12em 0 5em 0; 
 		height:auto;
+		min-height:60em;
 		background-image:url("../img/bg-img/bgBlur.jpg");
 		background-size: cover;
 		background-position: top;
@@ -3050,6 +3040,10 @@
 .nav_active{
 	text-decoration: underline;
 
+}
+
+.left{
+	float: left;
 }
 .modal-content{
 	padding:3em;
@@ -3358,3 +3352,132 @@
 		}
 
 	}
+
+
+
+/* ========================= SURVEY ==================== */
+/* General styles */
+
+* {
+	box-sizing: border-box;
+  }
+
+  
+  
+  /* Remove default form element appearance */
+  
+  input[type="range"] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+  }
+  
+  
+  /* positioning and background image*/
+  
+  input[type="range"] {
+	width: 300px;
+	height: 26px;
+	background: #ddd;
+	background: repeating-linear-gradient(90deg, #bbb, #bbb 2px, transparent 0px, transparent 28.35px);
+	background-repeat: no-repeat;
+	background-size: 286px 100%;
+	background-position: 7px center;
+  }
+  
+  
+  /* Form element re-Styling */
+  
+  input[type=range]::-webkit-slider-runnable-track {
+	-webkit-appearance: none;
+	/*    background: #ff7860;*/
+	background: #FF5E00;
+	width: 100%;
+	height: 4px;
+	border-radius: 4px;
+  }
+  
+  input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	border: 3px solid #FF5E00;
+	height: 16px;
+	width: 16px;
+	border-radius: 50%;
+	background: #fff;
+	margin-top: -6px;
+  }
+  
+  input[type=range]:focus {
+	outline: none;
+  }
+  
+  
+  /* scores box styles */
+  
+  .score {
+	text-align: center;
+	display: inline-block;
+	font-family: "proxima-nova", sans-serif;
+	font-size: 1em;
+	/*    font-weight: bold;*/
+	background: #2E2E2E;
+	color: #fff;
+	border-radius: 8px;
+	width: 7em;
+	height: 34px;
+	padding-top: 3px;
+	position: relative;
+	top: -8px;
+	right: -5px;
+	margin-left: 10px;
+  }
+  
+  
+  /* Form presentation element styles */
+  
+ 
+ 
+  
+  
+  /* Button Styles */
+  
+ 
+  
+  
+  /* CSS alt colour */
+  
+  input[type="range"]::-webkit-slider-runnable-track {
+	-webkit-appearance: none;
+	background: #00aaa3;
+  }
+  
+  input[type=range]::-webkit-slider-thumb {
+	border-color: #00aaa3;
+  }
+  
+  input[type=range]::-webkit-slider-thumb:hover {
+	border-color: #00504d;
+  }
+  
+  input[type=range]::-webkit-slider-thumb:active {
+	border-color: #00504d;
+  }
+  
+  /*============================     SVG STYLES ========================*/
+  .graph_line{
+	width:60em;
+  }
+
+  .modal-lg-size{
+	width:100em; 
+  }
+  .plot{width:70%;}
+  .legend{width:30%;}
+.embed{
+	padding:3em;
+}
+.close{
+	width:4em;
+	height:2em;
+}
+
+

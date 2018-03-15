@@ -23,8 +23,9 @@ $(document).ready(function(){
 
       var form_name = $(this).attr("data-id")
 
-      $('formname').val(form_name);
-      $('#modcodefeed').html(mod_code);
+      $('#formname').val(form_name);
+      $('#modcodefeed1').html(form_name);
+      
     })
 
     $('.btn-post').click(function(){
@@ -46,7 +47,33 @@ $(document).ready(function(){
 
     })
 
+ 
+    $('input:radio[name="attend"]').change(function(){
+      if(this.value == "No")
+      {
+        $('#studentFeedbackModal').modal('toggle');
+        location.reload();
+      }
+    })
 
+
+      $('input[type="range"]').on("change", function() {
+        var value;
+        if($(this).val() >=0 && $(this).val() < 2)
+        {value = "Very Poor"}
+        if($(this).val() >=2 && $(this).val() < 6)
+        {value = "Poor"}
+        if($(this).val() == 5)
+        {value = "Average"}
+        if($(this).val() >=6 && $(this).val() < 9)
+        {value = "Good"}
+        if($(this).val() >=9 && $(this).val() <= 11)
+        {value = "Very Good"}
+        $(this).next().html(value);
+      })
+         
+   
+    
 
 
 

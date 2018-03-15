@@ -6,6 +6,8 @@ from flask_restful import reqparse
 import bcrypt 
 import json
 import datetime
+import numpy as np
+import pygal 
 
 app = Flask(__name__)
 
@@ -282,7 +284,8 @@ def feedback_post():
                                                             }
                                                     }
                                             )
-    modulesDB.update_one({'mod_code' : module_code}, {'$set':{'active' : True}})
+    modulesDB.update_one({'mod_code' : module_code}, {'$set':{'active' : True,
+                                                              'active_feed':form_name}})
     #  users.update_one({'email':session['email']}, {'$set': {'name': name, 'surname': surname}})
     return redirect(url_for('home'))
 
@@ -291,6 +294,34 @@ def feedback_post():
 def feedback_submit():
 
     modulesDB = mongo.db.modules
+
+    form_name = request.form['form_name']
+
+
+
+    q1 = int(request.form['q1'])
+    q2 = request.form['q2']
+    q3 = int(request.form['q3'])
+    q4 = int(request.form['q4'])
+    q5 = int(request.form['q5'])
+
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q1' :q1}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q2' :q2}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q3' :q3}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q4' :q4}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q5' :q5}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$inc':{'feedback.0.count' : 1}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name},{'$push' : {"active_students" : session['s_no']}})
+    
+
+    return redirect(url_for('home'))
 
 
 
@@ -303,6 +334,8 @@ def close_feedback():
  
     module_code = request.form['mod_opt']
     modulesDB.update_one({'mod_code' : module_code}, {'$set':{'active' : False}})
+    modulesDB.update_one({'mod_code' : module_code}, {'$set':{'active_students' :[] }})
+    modulesDB.update_one({'mod_code' : module_code}, {'$set':{'active_feed' :"" }})
     return redirect(url_for('home'))
 
 
@@ -368,6 +401,80 @@ def myfeed():
     return redirect(url_for('signIn'))
 
 
+@app.route('/results',methods=['GET'])
+def results():
+    users = mongo.db.users
+
+
+
+    if request.method == 'GET' :
+        if 'username' in session:
+            user = users.find_one({"username" : session['username']})
+
+            username = session['username']
+
+            modules_var = []
+            for module in user['modules'] :
+                modules_var.append(module)
+            
+            print (modules_var)
+            results_ready = gather_feedback_results(modules_var)
+
+            graph_data = get_graph()
+            graph_data1 = get_graph1()
+            graph_data2 = get_graph2()
+            
+
+            return render_template('home/results.html', username = username,graph_data=graph_data, graph_data1=graph_data1, graph_data2=graph_data2, results = results_ready)
+        if 's_no' in session:
+            return redirect(url_for('home'))
+
+
+
+
+def get_graph():
+    from pygal.style import NeonStyle
+    # chart = pygal.StackedLine(fill=True, interpolate='cubic', style=NeonStyle)
+    graph = pygal.Line(fill=True,legend_box_size=20, interpolate='cubic', style=NeonStyle, legend_at_bottom=True )
+    graph.title = 'How have students been receiving your module?'
+    graph.x_labels = ['Week1','Week2','Week3','Week4','Week5','Week7']
+    graph.add('Delivery',  [5, 4.5, 6, 8, 8, 7.5])
+    graph.add('Content Satisfaction',    [8, 4, 6, 7, 6, 5.4])
+    graph.add('Level of understanding',    [5, 6,7, 8, 5, 6])
+    graph.add('Overall satisfaction',      [5, 3,6, 8, 9, 9] ,fill=True)
+    graph_data = graph.render_data_uri()
+    return  graph_data
+
+def get_graph1():
+    from pygal.style import NeonStyle
+    # chart = pygal.StackedLine(fill=True, interpolate='cubic', style=NeonStyle)
+    graph = pygal.Bar(fill=True,legend_box_size=20, interpolate='cubic', style=NeonStyle, legend_at_bottom=True )
+    graph.title = 'How have students been receiving your module?'
+    graph.x_labels = ['Week1','Week2','Week3','Week4','Week5','Week7']
+    graph.add('Delivery',  [5, 4.5, 6, 8, 8, 7.5])
+    graph.add('Content Satisfaction',    [8, 4, 6, 7, 6, 5.4])
+    graph.add('Level of understanding',    [5, 6,7, 8, 5, 6])
+    graph.add('Overall satisfaction',      [5, 3,6, 8, 9, 9] ,fill=True)
+    graph_data = graph.render_data_uri()
+    return  graph_data
+def get_graph2():
+    from pygal.style import NeonStyle
+    # chart = pygal.StackedLine(fill=True, interpolate='cubic', style=NeonStyle)
+    graph = pygal.Pie(fill=True,legend_box_size=20, interpolate='cubic', style=NeonStyle, legend_at_bottom=True )
+    graph.title = 'How have students been receiving your module?'
+    graph.x_labels = ['Week1','Week2','Week3','Week4','Week5','Week7']
+    graph.add('Delivery',  [5, 4.5, 6, 8, 8, 7.5])
+    graph.add('Content Satisfaction',    [8, 4, 6, 7, 6, 5.4])
+    graph.add('Level of understanding',    [5, 6,7, 8, 5, 6])
+    graph.add('Overall satisfaction',      [5,6,7,6,7,5] ,fill=True)
+    graph_data = graph.render_data_uri()
+    return  graph_data
+
+
+
+
+
+
 
 
 
@@ -396,21 +503,25 @@ def retrieve_user_modules(modules,functype) :
         mod_title = modulesDB.find_one({"mod_code" : mod_code})['mod_title']
         owner = modulesDB.find_one({"mod_code" : mod_code})['owner'] 
         active = modulesDB.find_one({"mod_code" : mod_code})['active']
+        active_feed = modulesDB.find_one({"mod_code" : mod_code})['active_feed']
+        active_students = modulesDB.find_one({"mod_code" : mod_code})['active_students'] 
 
 
-        ###### DATE INPUTTED WRONG
+  
 
         posts = []
         for post in modulesDB.find_one({"mod_code" : modules}).sort("date",-1) :
             posts.append(post)
         
-        posts.append(modulesDB.find_one({"mod_code" : modulesDB})['posts']) 
+        posts.append(modulesDB.find_one({"mod_code" : modules})['posts']) 
         module1 = {
             'mod_code' : mod_code,
             'mod_title' : mod_title,
             'mod_posts' : posts,
             'owner' : owner,
-            'active' : active
+            'active' : active,
+            'active_feed' : active_feed,
+            'active_students' : active_students
         }
         # print (module1)
         return module1
@@ -426,7 +537,8 @@ def retrieve_user_modules(modules,functype) :
             mod_title = modulesDB.find_one({"mod_code" : module})['mod_title']
             owner = modulesDB.find_one({"mod_code" : module})['owner'] 
             active = modulesDB.find_one({"mod_code" : module})['active']
-           
+            active_feed = modulesDB.find_one({"mod_code" : mod_code})['active_feed']
+            active_students = modulesDB.find_one({"mod_code" : mod_code})['active_students']
             # active_feed = modulesDB.find({"$and" : [{"mod_code" : module},
             #                                         {"status" : "active"}]})
             
@@ -447,7 +559,9 @@ def retrieve_user_modules(modules,functype) :
                 'mod_title' : mod_title,
                 'mod_posts' : posts,
                 'owner' : owner,
-                'active' : active
+                'active' : active,
+                'active_feed' : active_feed,
+                'active_students' : active_students                
             }
             my_modules.append(modules_ready)
         if(functype == 'reg') :
@@ -457,13 +571,100 @@ def retrieve_user_modules(modules,functype) :
             all_posts = sorted(all_posts, key=lambda k: k['date'], reverse=True)
             return all_posts
         
-        # elif(functype == 'feedback')
+def gather_feedback_results(modules) :
 
-    
+    modulesDB = mongo.db.modules
 
-           
+    if len(modules[0]) == 1 :
+        
+        mod_code = modules
+        module_results = []
 
-    
+        for feed in modulesDB.find_one({"mod_code" : modules})['feedback'] :
+            total_array = []
+            q1 = np.array(feed['q1'])
+            total_array.append(q1)
+            q2 = np.array(feed['q2'])
+            
+            q3 = np.array(feed['q3'])
+            total_array.append(q3)
+            q4 = np.array(feed['q4'])
+            total_array.append(q4)
+            q5 = np.array(feed['q5'])
+            total_array.append(q5)
+                
+                
+            total = np.array(total_array)
+
+            print(total)
+                
+            feedback_object = {
+                                'title' : feed['title'],
+                                'q1' : np.mean(q1),
+                                'q2' : np.mean(q2),
+                                'q3' : np.mean(q3),
+                                'q4' : np.mean(q4),
+                                'q5' : np.mean(q5),
+                                'total' : np.mean(total)
+                            }
+            module_results.append(feedback_object)
+
+        module_result = {
+            'mod_code' : mod_code,
+            'results' : module_results
+        }
+        return module_result
+        
+            
+            
+
+    else:
+
+        results_ready = []
+
+        for module in modules :
+
+            mod_code = module
+            module_results = []
+            
+
+            for feed in modulesDB.find_one({"mod_code" : module})['feedback'] :
+                total_array = []
+                q1 = np.array(feed['q1'])
+                total_array.append(q1)
+                q2 = np.array(feed['q2'])
+                
+                q3 = np.array(feed['q3'])
+                total_array.append(q3)
+                q4 = np.array(feed['q4'])
+                total_array.append(q4)
+                q5 = np.array(feed['q5'])
+                total_array.append(q5)
+                
+                
+                total = np.array(total_array)
+
+                print(total)
+                
+                feedback_object = {
+                                'title' : feed['title'],
+                                'q1' : np.mean(q1),
+                                'q2' : q2,
+                                'q3' : np.mean(q3),
+                                'q4' : np.mean(q4),
+                                'q5' : np.mean(q5),
+                                'total' : np.mean(total)
+                }
+                module_results.append(feedback_object)
+            module_total = {
+                'mod_code' : mod_code,
+                'results' : module_results
+            }
+            results_ready.append(module_total)
+
+        return results_ready
+
+
 
 
 if __name__ == '__main__':
