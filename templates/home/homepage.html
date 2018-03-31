@@ -289,94 +289,74 @@
                        <input type="hidden" id="formname" name="form_name">
                        <!-- <input type="text" class="form-control" name="form_name" placeholder="form1week1"> -->
                        <div class="form-group">
-                        <label for="q2">Did you attend lectures this week?</label>
+                        <label for="q1">Did you attend lectures this week?</label>
                         <input type="radio" name="attend" id="attend" value="Yes" checked>Yes &nbsp;
                         <input type="radio" name="attend" id="attend" value="No">No
                         </div>
                         <hr>
-                       
-
-                    <!-- <div class="form-group">   
-                        <h4><b>Please indicate your level of understanding of this week's content.</b></h4>
-                        <div style="text-align: center;">
-                            Very Poor &nbsp;<label class="radio-inline">1<br>
-                                <input type="radio" id="q7" name="q7" value="1" required>
-                            </label>
-                            &nbsp;
-                            <label class="radio-inline">2<br>
-                                <input type="radio" id="q7" name="q7" value="2">
-                            </label>
-                            &nbsp;
-                            <label class="radio-inline">3<br>
-                                <input type="radio" id="q7" name="q7" value="3">
-                            </label>
-                            &nbsp;
-                            <label class="radio-inline">4<br>
-                                <input type="radio" id="q7" name="q7" value="4">
-                            </label>
-                            &nbsp;
-                            <label class="radio-inline">5<br>
-                                <input type="radio" id="q7" name="q7" value="5">
-                            </label> &nbsp; &nbsp;Very Good
-                        </div>
-                    </div> -->
+                        <br>
                    
-                    <div class="form-group">   
-                        <h4><b>Do feel there is enough think time for students in the lectures?</b></h4>
-                        <div style="text-align: center;">
-                            <label class="radio-inline">Yes<br>
-                                <input type="radio" id="q7" name="q7" value="Very Poor" required>
-                            </label>
-                            <label class="radio-inline">No<br>
-                                <input type="radio" id="q7" name="q7" value="Very Poor" required>
-                            </label>
-                            
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="form-group">   
-                            <h4><b>Would you like to see more examples during class?</b></h4>
-                            <div style="text-align: center;">
-                                <label class="radio-inline">Yes<br>
-                                    <input type="radio" id="q7" name="q7" value="Very Poor" required>
-                                </label>
-                                <label class="radio-inline">No<br>
-                                    <input type="radio" id="q7" name="q7" value="Very Poor" required>
-                                </label>
-                                
-                            </div>
-                        </div>
-                    <hr>
+             
                     <div class="form-group">
                     <h4><b>Thinking about the following headings,please give a rating on how satisfied you were with :</b></h4>    
                     <label  for="q1">Lecture Content</label>
-                        <input  type="range" class="left" id="sliderTwo" name="slider2" min=0 max=10 value=0>
+                        <input  type="range" class="left" id="sliderTwo" name="slider2" min=0 max=10 value=0 required>
                         <div class="score left" id="ratingOne">Please Select</div>
                     
                     <br>
                     <br>
                     <label for="q1">Your Level of Understanding</label>
-                        <input type="range" class="left" id="sliderTwo" name="slider2" min=0 max=10 value=0>
+                        <input type="range" class="left" id="sliderTwo" name="slider2" min=0 max=10 value=0 required>
                         <div class="score left" id="ratingOne">Please Select</div>
                     
                     <br>
                     <br>
                     <label  for="q1">Delivery of content</label>
-                        <input type="range" class="left"  id="sliderTwo" name="slider2" min=0 max=10 value=0>
+                        <input type="range" class="left"  id="sliderTwo" name="slider2" min=0 max=10 value=0 required>
                         <div class="score left" id="ratingOne">Please Select</div>
+                    </div> 
+                    <br> 
+                    <hr>
+                    <div class="form-group">
+                        <label for="q1">Do you feel there is enough think time for students during class?</label>
+                        <input type="radio" name="think" id="attend" value="Yes">Yes &nbsp;
+                        <input type="radio" name="think" id="attend" value="No">No
+                        </div>
+                        <hr>
+
+                    <br>
+                    <div class="form-group">
+                        <label for="q1"><h4><b><i>'The lecturer teaches the content' :</i></b></h4> </label>
+                        <input type="radio" name="speed" id="attend" value="Yes">Too quickly &nbsp;
+                        <input type="radio" name="speed" id="attend" value="No">Too slowly &nbsp;
+                        <br>
+                        <input type="radio" name="speed" id="attend" value="No">I am keeping up with the pace &nbsp;
+                        
+                        </div>
+                        <hr>
+
+                    <br>
+                    <div class="form-group">
+                        <h4><b>Thinking about classroom teaching, fill in the following</b></h4>
+                        <h4><b><i>'It would be helpful for me if my lecturer spent' :</i></b></h4>
+                        
+                        <label class="left" for="q2">More Time :</label>
+                        <textarea form="studentFeedbackModal" name="more" id=""  rows="1"></textarea>
+                        <label class="left" for="q2">Less Time :</label>
+                        <textarea form="studentFeedbackModal" name="less" id=""  rows="1"></textarea>
+                        <label class="left" for="q2">Continued doing: </label>
+                        <textarea form="studentFeedbackModal" name="less" id=""  rows="1"></textarea>
                     </div>
 
-                    
-                    <hr>
-                    <br>
                     <div class="form-group">
                             <h4><b>How would you rate your lectures overall this week?(0-10)</b></h4>
                             <input type="range" class="left" id="sliderOne" name="slider1" min=0 max=10 value=0>
                             <div class="score left" id="ratingOne">Please Select</div>
                             <label class="left" for="q2">Why? Please comment</label>
                            <textarea form="studentFeedbackModal" name="ratingReason" id=""  rows="2"></textarea>
-                            </div>
-                            <hr>
+                    </div>
+                    <hr>
+               
                     
                 </div>
 

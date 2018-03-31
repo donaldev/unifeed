@@ -27,6 +27,7 @@
                                        <div class="center">
                                             <h1>Login</h1>
                                             <p class="white">Please enter your Student Number / Lecturer username </p>
+                                            <div id="error"></div>
                                         <form method=POST action="{{ url_for('login') }}">
                                             <div class="form-group">
                                                 <label class="formLabel" for="exampleInputEmail1">Username/Student Number</label>
@@ -73,6 +74,17 @@
             </div>
         </footer>
 
-
+        {% if error_msg %}
+        
+        <script type="text/javascript">
+        
+            var error = '{{error_msg}}';
+            console.log(error);
+            document.getElementById("error").innerHTML += "Error: " +error;
+            document.getElementById("error").style.visibility = 'visible';
+    
+        
+        </script>
+        {% endif %}
 
 {% endblock %}

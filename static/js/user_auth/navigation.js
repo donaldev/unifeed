@@ -168,7 +168,6 @@ $(document).ready(function(){
             type : 'POST',
             url : '/checkModules'
         }).done(function(data){
-          // var incorrectMods = data.allModules[0].incorrect;
           var correctMods = data.allModules[0].correct;
           
 

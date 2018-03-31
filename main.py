@@ -57,10 +57,21 @@ def login():
             if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login_teacher['password']) ==  login_teacher['password']:
                 session['username'] = username_var  #store their username in a session
                 return redirect(url_for('home'))
+            error_msg = 'Invalid password'
+                
+        error_msg = 'Not a valid username'
+        
         if login_student : #if a student is logged in
             if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login_student['password']) ==  login_student['password']:
                 session['s_no'] = username_var  #store their student number in a session
                 return redirect(url_for('home'))
+            
+            else:
+                error_msg = 'Invalid password'
+                return render_template('user_auth/login.html', error_msg = error_msg)
+        else:        
+            error_msg = 'Not a valid username'
+            return render_template('user_auth/login.html', error_msg = error_msg)
 
     return render_template('user_auth/login.html')
 
@@ -167,7 +178,9 @@ def registerS():
 
         if existing_user is None:
            user_type = 'student'
+
            hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
+           
            users.insert({'s_no' : username_var, 'password' : hashpass, 'user_type' : user_type, 'modules' : modules})
            session['s_no'] = username_var
            return redirect(url_for('home'))
@@ -246,7 +259,6 @@ def mod_post():
         'mod_code': module
     }
     modulesDB.update_one({'mod_code': module}, {'$push':{'posts':post_ready}})
-    #  users.update_one({'email':session['email']}, {'$set': {'name': name, 'surname': surname}})
     return redirect(url_for('myfeed'))
 
 
