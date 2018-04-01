@@ -229,36 +229,73 @@
                                                                                             </svg>
                                                                                             <div class="row" style="text-align:center;">Delivery of Content</div>
                                                                                         </div>
-
-                                                                    </div>
-                                                                        <hr>
+                                                                                    </div>
+                                                                    
+   <!--                                                                     <hr>
 
                                                                     <div class="row">
                                                                             <h3><i>Is there enough think time for students in class?</i></h3>
-                                                                            <div class="col-sm-6" id="yes4"> <h4>Yes </h4>:
-                                                                                {%for answer in form.q4%}
-                                                                                {{answer}}
-                                                                                {%endfor%}
-                                                                            </div>
-                                                                            <div class="col-sm-6 " id="no4"></div>
+                                                                                YES : {{form.q4.yes}}
+                                                                                NO : {{form.q4.no}}
+                                                                            
 
                                                                     </div>
                                                                     <hr>
-                                                                    <div class="row">Q5 : {{form.q5}}</div>
+                                                                    <div class="row">Q5 : {{form.q5}}</div>-->
+                                                                    <hr> 
+                                                                    <br>
+                                                                            <h3><i>You should spend:</i></h3>
+                                                                            <hr>
+                                                                            <div class="col-sm-4"><u><b>More time:</b></u>
+                                                                                {%for item in form.q6%}
+                                                                                <div class="row">{{item}}</div>
+                                                                                {%endfor%}
+                                                                            </div>
+                                                                            <div class="col-sm-4"><u><b>Less time:</b></u> 
+                                                                                    {%for item in form.q7%}
+                                                                                    <div class="row">{{item}}</div>
+                                                                                    {%endfor%}
+                                                                            </div>
+                                                                            <div class="col-sm-4"><u><b>Continue: </b></u> 
+                                                                                        {%for item in form.q8%}
+                                                                                        <div class="row">{{item}}</div>
+                                                                                        {%endfor%}
+                                                                            </div>
+                                                                           
+                                                                   
                                                                     <hr>
-                                                                    <div class="row">Q6 : {{form.q6}}</div>
-                                                                    <hr>
-                                                                    <div class="row"> Q7 : {{form.q7}}</div>
-                                                                    <hr>
-                                                                    <div class="row">Q8 : {{form.q8}}</div>
-                                                                    <hr>
-                                                                    <div class="row">Q9 : {{form.q9}}</div>
-                                                                    <hr>
-                                                                    <div class="row">Q10 : {{form.q10}}</div>
+                                                    
+                                                                 <br>
+                                                                    
+                                                                    <div class="row">
                                                                    
                                                                         
-                                                                 
-                                
+                                                                    <div class="single-chart">
+                                                                                            <svg viewbox="0 0 36 36" class="circular-chart blue">
+                                                                                              <path class="circle-bg"
+                                                                                                d="M18 2.0845
+                                                                                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                                                              />
+                                                                                              <path class="circle"
+                                                                                                stroke-dasharray="{{form.q9}}, 10"
+                                                                                                d="M18 2.0845
+                                                                                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                                                              />
+                                                                                              <text x="18" y="20.35" class="percentage">{{form.q9}}</text>
+                                                                                            </svg>
+                                                                                            <div class="row" style="text-align:center;">Overall Satisfaction</div>
+                                                                    </div>
+                                                                    <hr>
+                                                                    <br>
+                                                                    <div class="col-sm-4"><u><b>Additional Comments: </b></u> 
+                                                                        {%for item in form.q10%}
+                                                                        <div class="row">{{item}}</div>
+                                                                        {%endfor%}
+                                                            </div>
+                                                                    </div>
+                                                                
                                                                     </div>
                                                                 
                                                             </div>

@@ -3,11 +3,13 @@ from flask_pymongo import PyMongo
 from pymongo import MongoClient
 from flask_restful import Resource, Api
 from flask_restful import reqparse
+from collections import Counter
 import bcrypt 
 import json
 import datetime
 import numpy as np
 import pygal 
+
 
 app = Flask(__name__)
 
@@ -707,8 +709,39 @@ def gather_feedback_results(modules) :
                     
                 #make array of all numeric values  
                 total = np.array(total_array)
+                
+
+                yes=0
+                no=0
+                for item in q4 :
+                    if item == "Yes" :
+                        yes+1
+                    else :
+                        no+1
+                q4 = {
+                    'yes' : yes,
+                    'no' : no
+                }
 
                 
+                fast=0
+                slow=0
+                right =0
+                for item in q5 :
+                    if item == "Too Quickly" :
+                        fast+1
+                    if item == "Too Slowly" :
+                        slow+1
+                    else :
+                        right+1
+            
+                q5 = {
+                    'fast' : fast,
+                    'slow' : slow,
+                    'right' : right
+                }
+
+
                     
                 feedback_object = {
                                     'title' : feed['title'],
@@ -739,8 +772,8 @@ def gather_feedback_results(modules) :
         print(results_ready)
         return results_ready
 
-
-
+def most_common(lst):
+    return max(set(lst), key=lst.count)
 
 if __name__ == '__main__':
     app.secret_key = 'mysecret'

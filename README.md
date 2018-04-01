@@ -8,11 +8,12 @@ Getting started:
 download python (v.3.6.3)
 make sure python is added to your path 2)open command prompt and run:
 pip install -r requirements.txt
+
 To run the project:
 
 Open command prompt
-Go to directory with python script eg. cd Documents...
-run -> python filename.py
+Go to unifeed directory
+run -> python main.py
 Open browser and enter 127.0.0.1:5000
 
 --------------------------------------------------
