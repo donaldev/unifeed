@@ -3074,7 +3074,7 @@
 		.white{
 			color:white;
 		}
-		.circle{
+		.circle1{
 			margin:0 auto;
 			border-radius:50%;
 			border:1px solid black;
@@ -3115,6 +3115,11 @@
 			padding:1em;
 		}
 		.student_module{
+			background-color:white;
+			border-radius:2em;
+			padding:1em;
+		}
+		.lecturer_module_results{
 			background-color:white;
 			border-radius:2em;
 			padding:1em;
@@ -3475,3 +3480,72 @@
 }
 
 
+/*=========================== RESULTS ===========================*/
+.result_square{
+	padding:.2em;
+	
+	border:2px solid green;
+
+}
+.result_text{
+	text-align: center;
+	font-size: 2em;
+	font-style: italic;
+	
+	padding:.2em;
+}
+
+.flex-wrapper {
+	display: flex;
+	flex-flow: row nowrap;
+  }
+  
+  .single-chart {
+	width: 33%;
+	justify-content: space-around ;
+  }
+  
+  .circular-chart {
+	display: block;
+	margin: 10px auto;
+	max-width: 80%;
+	max-height: 250px;
+  }
+  
+  .circle-bg {
+	fill: none;
+	stroke: #eee;
+	stroke-width: 3.8;
+  }
+  
+  .circle {
+	fill: none;
+	stroke-width: 2.8;
+	stroke-linecap: round;
+	animation: progress 1s ease-out forwards;
+  }
+  
+  @keyframes progress {
+	10% {
+	  stroke-dasharray: 0 100;
+	}
+  }
+  
+  .circular-chart.orange .circle {
+	stroke: #ff9f00;
+  }
+  
+  .circular-chart.green .circle {
+	stroke: #4CC790;
+  }
+  
+  .circular-chart.blue .circle {
+	stroke: #3c9ee5;
+  }
+  
+  .percentage {
+	fill: #666;
+	font-family: sans-serif;
+	font-size: 0.5em;
+	text-anchor: middle;
+  }

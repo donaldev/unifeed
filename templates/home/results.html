@@ -68,59 +68,241 @@
                 <h1 class="white" style="font-size:3em;"> My Results</h1>
                 
                 <div class="row">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
                         <div class="center">
-                            
-                                
-                                        
-                                        <div class="col-sm-6"><button  href="#" class="btn btn-success btn-startFeed btn-sm" data-toggle="modal" data-target="#resultsModal">Graph Me!</button></div>
-        
-                                <br>
-                                <br>
-                            <div class="row">
-           
-
-                            <div class="modal fade "id="resultsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal_space">
-                                       <div class="modal-dialog modal-lg-size">
-                                           <div class="modal-content modal-lg-size">
-                                               <div class="modal-header">
-                                                    
-                                                   <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button></button>
-                                                   <h4 class="modal-title" id="myModalLabel"> Graphical Results:  </h4>
-                                                   <div class="modal-body">
-                                                        <div class="col-sm-3"></div>
-                                                        <div class="col-sm-6">
-                                                            <div class="center">
-                                                        <div class="container">
-                                                            <div class="row" style="margin-left:-9em;">
-                                                                <div class="embed">
-                                                                <embed  type="image/svg+xml" src={{graph_data|safe}} class="graph_line"/>
-                                                                </div>
-                                                                <br>
-                                                                <div class="embed">
-                                                                <embed  type="image/svg+xml" src={{graph_data1|safe}} class="graph_line"/>
-                                                                </div>
-                                                                <br>
-                                                                <div class="embed">
-                                                                <embed  type="image/svg+xml" src={{graph_data2|safe}} class="graph_line"/>
-                                                                </div>
-                                                            </div>
-                                                            </div>    
-                                                            </div>
+                    
+                                <!-- <script>
+                                    console.log('{{results}}')
+                                </script> -->
+                        
+                        {%for result in results %} 
+                        <div class="modal fade "id="{{result.mod_code}}-graph" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal_space">
+                                   <div class="modal-dialog modal-lg-size">
+                                       <div class="modal-content modal-lg-size">
+                                           
+                                               <div class="modal-body">
+                                                    <div class="col-sm-3"></div>
+                                                    <div class="col-sm-6">
+                                                    <div class="center">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col sm-4"></div>
+                                                            <div class="col sm-4">{{result.mod_code}}</div>
+                                                            <div class="col sm-4"></div>
                                                         </div>
-                                                        <div class="col-sm-3"></div>
-                                                   </div>
-                                                   </div>
+                                                        <div class="row" style="margin-left:-9em;">
+                                                            
+                                                            <div class="col-sm-8">
+                                                            <div class="embed">
+                                                            <embed  type="image/svg+xml" src={{graph_data|safe}} class="graph_line"/>
+                                                            </div>
+                                                            <br>
+                                                            <!-- <div class="embed">
+                                                            <embed  type="image/svg+xml" src={{graph_data1|safe}} class="graph_line"/>
+                                                            </div>
+                                                            <br>
+                                                            <div class="embed">
+                                                            <embed  type="image/svg+xml" src={{graph_data2|safe}} class="graph_line"/>
+                                                            </div> -->
+                                                            </div>
+                                                            <div class="col-sm-2"></div>
+                                                        </div>
+                                                    </div>    
+                                                    </div>
+                                                    </div>
+                                                    <div class="col-sm-2"></div>
                                                </div>
-                                           </div>
+                                               <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
+                                               </div>
+                                            
                                        </div>
                                    </div>
-                                </div>
+                               </div>
+                            </div>
+                            <div class="row lecturer_module_results">
+                                
+                               
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4" style="border-radius:2px;background-color:#A68181;font-size:1.5em;color:white;padding:.3em"> <b>{{result.mod_code}}</b> </div>
+                                <div class="col-sm-4"></div>
+                                    
+                                    
+                                <div class="col-sm-12" style="border-top:1px solid black;">
+                                    <br>
+                                    <!--FOR EACH MODULE -->
+                                    <div class="row">
+                                
+                                            <div class="col-sm-4"> <button type="button" value="" class="btn btn-warning btn-forms" data-toggle="collapse" data-target="#{{result.mod_code}}" > <i class="fa fa-files-o"></i> &nbsp;View Forms </button>  </div>
+                                                
+                                            <div class="col-sm-4 result_square">
+                                                Average Score:
+                                                    <div class="result_text">{{result.avg_score}}/10</div>
+                                            </div>
+                                            <div class="col-sm-4"> <button type="button" value="" class="btn btn-info btn-trends" data-toggle="modal" data-target="#{{result.mod_code}}-graph" data-id="mod_code"> <i class="fa fa-area-chart"></i> &nbsp;View Trends </button>  </div>
+                                            
+                                           
+                                                    
+                                               
+                                    </div> 
+                                    
+
+                                    <div id="{{result.mod_code}}" class="collapse">
+                                        {%for form in result.results%}
+                                            <hr>
+                                            <div class="row">
+                                                    <div class="col-sm-5 btn-link">{{form.title}}</div>
+                                                    <div class="col-sm-3">Responses: {{form.responses}}</div>
+                                                    {%if form.responses != 0 %}
+                                                    <div class="col-sm-4"> <button type="button" value="" class="btn btn-success btn-form_feedback" data-toggle="modal" data-target="#{{form.title}}" data-id="{{form.title}}"> <i class="fa fa-pie-chart"></i> &nbsp;View Results </button>  </div>
+                                                    {%endif%}
+                                            </div>
+                                            <hr>
+
+                                            <div class="modal fade "id="{{form.title}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal_space">
+                                                       <div class="modal-dialog modal-lg">
+                                                           <div class="modal-content modal-lg">
+                                                               <div class="modal-header">
+                                                                    
+                                                                   <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                                   <h2 class="modal-title" id="myModalLabel"><b>Results for : {{form.title}} </b> </h2>
+                                                                   <hr>
+                                                                   <div class="modal-body">
+                                                                    
+                                                                        
 
 
-                           {% if results%}
+                                                                    <div class="row">
+                                                                        <h3><i>This is how your students rated the following headings (out of 10):</i></h3>
+                                                                            <div class="single-chart">
+                                                                                    <svg viewbox="0 0 36 36" class="circular-chart orange">
+                                                                                      <path class="circle-bg"
+                                                                                        d="M18 2.0845
+                                                                                          a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                                                      />
+                                                                                      <path class="circle"
+                                                                                        stroke-dasharray="{{form.q1}}, 10"
+                                                                                        d="M18 2.0845
+                                                                                          a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                                                      />
+                                                                                      <text x="18" y="20.35" class="percentage">{{form.q1}}</text>
+                                                                                    </svg>
+                                                                                    <div class="row" style="text-align:center;">Content</div>
+                                                                                </div>
+                                                                                <div class="single-chart">
+                                                                                        <svg viewbox="0 0 36 36" class="circular-chart green">
+                                                                                          <path class="circle-bg"
+                                                                                            d="M18 2.0845
+                                                                                              a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                              a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                                                          />
+                                                                                          <path class="circle"
+                                                                                            stroke-dasharray="{{form.q2}}, 10"
+                                                                                            d="M18 2.0845
+                                                                                              a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                              a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                                                          />
+                                                                                          <text x="18" y="20.35" class="percentage">{{form.q2}}</text>
+                                                                                        </svg>
+                                                                                        <div class="row" style="text-align:center;">Level of Understanding</div>
+                                                                                    </div>
+                                                                                    <div class="single-chart">
+                                                                                            <svg viewbox="0 0 36 36" class="circular-chart blue">
+                                                                                              <path class="circle-bg"
+                                                                                                d="M18 2.0845
+                                                                                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                                                              />
+                                                                                              <path class="circle"
+                                                                                                stroke-dasharray="{{form.q3}}, 10"
+                                                                                                d="M18 2.0845
+                                                                                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                                                              />
+                                                                                              <text x="18" y="20.35" class="percentage">{{form.q3}}</text>
+                                                                                            </svg>
+                                                                                            <div class="row" style="text-align:center;">Delivery of Content</div>
+                                                                                        </div>
+
+                                                                    </div>
+                                                                        <hr>
+
+                                                                    <div class="row">
+                                                                            <h3><i>Is there enough think time for students in class?</i></h3>
+                                                                            <div class="col-sm-6" id="yes4"> <h4>Yes </h4>:
+                                                                                {%for answer in form.q4%}
+                                                                                {{answer}}
+                                                                                {%endfor%}
+                                                                            </div>
+                                                                            <div class="col-sm-6 " id="no4"></div>
+
+                                                                    </div>
+                                                                    <hr>
+                                                                    <div class="row">Q5 : {{form.q5}}</div>
+                                                                    <hr>
+                                                                    <div class="row">Q6 : {{form.q6}}</div>
+                                                                    <hr>
+                                                                    <div class="row"> Q7 : {{form.q7}}</div>
+                                                                    <hr>
+                                                                    <div class="row">Q8 : {{form.q8}}</div>
+                                                                    <hr>
+                                                                    <div class="row">Q9 : {{form.q9}}</div>
+                                                                    <hr>
+                                                                    <div class="row">Q10 : {{form.q10}}</div>
+                                                                   
+                                                                        
+                                                                 
+                                
+                                                                    </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                        {%endfor%}
+
+                                    </div>
+                                        
+
+                                       
+                                           
+                                    </div>    
+                                    </div>
+                            </div>
+                                
+
+                            <br>
+                            {%endfor%}
+
+                            <!--  -->
+
+                        
+                    </div>
+                        </div>
+                        </div>
+                </div>  
+            </div>          
+
+            
+
+
+            
+
+           
+
+                            
+                            
+
+                            
+
+                           <!-- {% if results%}
                                 {%for result in results%}
                                     <div class="col-sm-12">
                                         {% if result.results %}
@@ -130,22 +312,14 @@
                                             <div class="per_feedback" style="border:1px solid black">
                                             <h2>{{quiz.title}}</h2>    
                                             <h3>Overall Satisfaction : {{quiz.total}}</h3>
-                                                <h3>Additional Comments: </h3>
-                                                    <ul>
-                                                        {% for comment in quiz.q2 %}
-
-                                                           <li> {{ comment }}</li>
-
-                                                        {%endfor%}
-                                                    </ul>
-                                                </div>    
+                                                
                                                 {% endfor %}
                                             </div>
                                         {% endif %}
 
                                     </div>
                                 {%endfor%}
-                            {% endif %}
+                            {% endif %} -->
                                    
                         </div>
                     </div>
@@ -156,9 +330,38 @@
     </div>        
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
+<!-- <script>
+var yes = "Yes";
+var no = "No";
+var quick = "Too Fast"
+var slow = "Too Slow"
+var right = "Good pace"
 
+var q4 = document.getElementById('q4A').innerHTML;
+
+var pie_data = {
+    datasets: [{
+        data:   q4
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Yes',
+        'No',
+        
+    ]
+};
+var thinkChart = document.getElementById('thinkTime').getContext('2d');
+var myChart1 = new Chart(thinkChart, {
+    type: 'pie',
+    data: pie_data
+});
+
+
+</script> -->
  
 
 <footer id="footer">

@@ -284,9 +284,15 @@ def feedback_post():
         'q2' : [],
         'q3' : [],
         'q4' : [],
-        'q5' : []
+        'q5' : [],
+        'q6' : [],
+        'q7' : [],
+        'q8' : [],
+        'q9' : [],
+        'q10' : [],
+        'count': 0
     }
-    # print(form_ready)
+    #push newly created form to the first element of the list inside 'feedback'
     modulesDB.update({'mod_code': module_code}, {'$push':
                                                             { 
                                                                 'feedback': {
@@ -312,13 +318,19 @@ def feedback_submit():
 
 
     q1 = int(request.form['q1'])
-    q2 = request.form['q2']
+    q2 = int (request.form['q2'])
     q3 = int(request.form['q3'])
-    q4 = int(request.form['q4'])
-    q5 = int(request.form['q5'])
+    q4 = request.form['q4']
+    q5 = request.form['q5']
+    q6 = request.form['q6']
+    q7 = request.form['q7']
+    q8 = request.form['q8']
+    q9 = int(request.form['q9'])
+    q10 = request.form['q10']
+    print(form_name)
+    print(q1,q2,q3,q4,q5,q6,q7,q8,q9,q10)
 
-
-    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q1' :q1}})
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q1' : q1 }})
 
     modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q2' :q2}})
 
@@ -327,6 +339,16 @@ def feedback_submit():
     modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q4' :q4}})
 
     modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q5' :q5}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q6' :q6}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q7' :q7}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q8' :q8}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q9' :q9}})
+
+    modulesDB.update_one({"feedback.0.title" : form_name}, {'$push':{'feedback.0.q10' :q10}})
 
     modulesDB.update_one({"feedback.0.title" : form_name}, {'$inc':{'feedback.0.count' : 1}})
 
@@ -597,15 +619,25 @@ def gather_feedback_results(modules) :
             q1 = np.array(feed['q1'])
             total_array.append(q1)
             q2 = np.array(feed['q2'])
-            
+            total_array.append(q2)
             q3 = np.array(feed['q3'])
             total_array.append(q3)
             q4 = np.array(feed['q4'])
-            total_array.append(q4)
+            
             q5 = np.array(feed['q5'])
-            total_array.append(q5)
+            
+            q6 = np.array(feed['q6'])
+
+            q7 = np.array(feed['q7'])
+            
+            q8 = np.array(feed['q8'])
+            
+            q9 = np.array(feed['q9'])
+            total_array.append(q9)
+            q10 = np.array(feed['q10'])
+            
                 
-                
+            #make array of all numeric values    
             total = np.array(total_array)
 
             print(total)
@@ -615,15 +647,25 @@ def gather_feedback_results(modules) :
                                 'q1' : np.mean(q1),
                                 'q2' : np.mean(q2),
                                 'q3' : np.mean(q3),
-                                'q4' : np.mean(q4),
-                                'q5' : np.mean(q5),
-                                'total' : np.mean(total)
+                                'q4' : q4,
+                                'q5' : q5,
+                                'q6' : q6,
+                                'q7' : q7,
+                                'q8' : q8,
+                                'q9' : np.mean(q9),
+                                'q10' : q10,
+                                'total' : np.mean(total),
+                                'responses' : feed['count']
                             }
             module_results.append(feedback_object)
 
+            avg = np.mean(q1) + np.mean(q2) + np.mean(q3) + np.mean(q9)
+            avg_score = avg/4
+
         module_result = {
             'mod_code' : mod_code,
-            'results' : module_results
+            'results' : module_results,
+            'avg_score' : avg_score
         }
         return module_result
         
@@ -645,35 +687,56 @@ def gather_feedback_results(modules) :
                 q1 = np.array(feed['q1'])
                 total_array.append(q1)
                 q2 = np.array(feed['q2'])
-                
+                total_array.append(q2)
                 q3 = np.array(feed['q3'])
                 total_array.append(q3)
                 q4 = np.array(feed['q4'])
-                total_array.append(q4)
+                
                 q5 = np.array(feed['q5'])
-                total_array.append(q5)
                 
+                q6 = np.array(feed['q6'])
+
+                q7 = np.array(feed['q7'])
                 
+                q8 = np.array(feed['q8'])
+                
+                q9 = np.array(feed['q9'])
+                total_array.append(q9)
+                q10 = np.array(feed['q10'])
+                
+                    
+                #make array of all numeric values  
                 total = np.array(total_array)
 
-                print(total)
                 
+                    
                 feedback_object = {
-                                'title' : feed['title'],
-                                'q1' : np.mean(q1),
-                                'q2' : q2,
-                                'q3' : np.mean(q3),
-                                'q4' : np.mean(q4),
-                                'q5' : np.mean(q5),
-                                'total' : np.mean(total)
-                }
+                                    'title' : feed['title'],
+                                    'q1' : np.mean(q1),
+                                    'q2' : np.mean(q2),
+                                    'q3' : np.mean(q3),
+                                    'q4' : q4,
+                                    'q5' : q5,
+                                    'q6' : q6,
+                                    'q7' : q7,
+                                    'q8' : q8,
+                                    'q9' : np.mean(q9),
+                                    'q10' : q10,
+                                    'total' : np.mean(total),
+                                    'responses' : feed['count']
+                    }
                 module_results.append(feedback_object)
-            module_total = {
-                'mod_code' : mod_code,
-                'results' : module_results
-            }
+                avg = np.mean(q1) + np.mean(q2) + np.mean(q3) + np.mean(q9)
+                avg_score = avg/4
+                module_total = {
+                    'mod_code' : mod_code,
+                    'results' : module_results,
+                    'avg_score' : avg_score
+                    
+                }
             results_ready.append(module_total)
 
+        print(results_ready)
         return results_ready
 
 

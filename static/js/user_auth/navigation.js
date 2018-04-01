@@ -147,7 +147,9 @@ $(document).ready(function(){
       // })();
 
       
-
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
      
       var validMods = [];
       $('.module1').on('input',function(event){
